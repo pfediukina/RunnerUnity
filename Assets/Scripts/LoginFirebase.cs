@@ -30,7 +30,7 @@ public class LoginFirebase : MonoBehaviour
 
     public IEnumerator LoginProcess(string email, string password)
     {
-        var LoginTask = FirebaseManager.auth.SignInWithEmailAndPasswordAsync(email, password);
+        var LoginTask = FirebaseManager.Auth.SignInWithEmailAndPasswordAsync(email, password);
         yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
 
         if(LoginTask.Exception != null)

@@ -29,7 +29,7 @@ public class RegistrationFirebase : MonoBehaviour
 
     public IEnumerator RegistrationProcess(string name, string email, string password)
     {
-        var RegisterTask = FirebaseManager.auth.CreateUserWithEmailAndPasswordAsync(email, password);
+        var RegisterTask = FirebaseManager.Auth.CreateUserWithEmailAndPasswordAsync(email, password);
         yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
         if(RegisterTask.Exception != null)
@@ -74,6 +74,7 @@ public class RegistrationFirebase : MonoBehaviour
                 }
                 else
                 {
+                    StartCoroutine(AddUserName(name));
                     Debug.Log("Registered");
                     _authUI.HideErrorText();
                 }
@@ -81,9 +82,9 @@ public class RegistrationFirebase : MonoBehaviour
         }
     }
 
-    private void AddUserName(string name)
+    private IEnumerator AddUserName(string name)
     {
-        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
-        
+        var loginTask = FirebaseManager.Database.Child(_user.UserId).Child("Name").SetValueAsync(name);
+        yield return new WaitUntil(predicate: () => loginTask.IsCompleted);
     }
 }
