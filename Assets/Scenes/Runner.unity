@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestChunk
       objectReference: {fileID: 0}
+    - target: {fileID: 3083598833024944138, guid: 63d6dc558264ee14cb07488833e495f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3083598833024944139, guid: 63d6dc558264ee14cb07488833e495f1, type: 3}
       propertyPath: m_RootOrder
       value: 5
