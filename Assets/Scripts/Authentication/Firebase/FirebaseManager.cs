@@ -2,28 +2,34 @@ using UnityEngine;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using System.Collections;
 
 public class FirebaseManager : MonoBehaviour
 {
-    public static DependencyStatus DependencyStatus;
     public static FirebaseAuth Auth;
     public static DatabaseReference Database;
 
     void Awake()
     {
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
-            DependencyStatus = task.Result;
-            if(DependencyStatus == DependencyStatus.Available)
-            {
-                InitializeFirebase();
-            }
-        });
+        InitializeFirebase();
     }
 
-    public void InitializeFirebase()
+    void Start()
+    {
+       CheckUser();
+    }
+
+
+    private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
         Auth = FirebaseAuth.DefaultInstance;
         Database = FirebaseDatabase.DefaultInstance.RootReference;
+    }
+
+     private void CheckUser()
+     {
+            if(Auth.CurrentUser != null)
+                AuthManager.GoToMainMenu();
     }
 }

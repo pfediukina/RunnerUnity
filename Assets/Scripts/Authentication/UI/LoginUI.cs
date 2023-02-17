@@ -9,7 +9,7 @@ public class LoginUI : MonoBehaviour
 {
     public static Action<string, string> OnContinueClickedLog;
 
-    [HideInInspector] public AuthorizationUI Authorization;
+    [HideInInspector] public AuthenticationUI Authorization;
 
     [SerializeField] private Button _continueButton;
 

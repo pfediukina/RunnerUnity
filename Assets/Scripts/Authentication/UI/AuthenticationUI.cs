@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class AuthorizationUI : MonoBehaviour
+public class AuthenticationUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _errorText;
     [SerializeField] private TextMeshProUGUI _titleText;
@@ -19,6 +19,12 @@ public class AuthorizationUI : MonoBehaviour
         InitializeRegistration();
         InitializeLogin();
         ShowCurrentWindow();
+    }
+
+    public void HideAllWindows()
+    {
+        ShowLogin(false);
+        ShowRegistration(!false);
     }
 
     public void ShowErrorMessage(string error)
@@ -58,7 +64,7 @@ public class AuthorizationUI : MonoBehaviour
         if(show)
         {
             _titleText.text = "LOGIN";
-            _buttonText.text = "Sign on";
+            _buttonText.text = "Sign up";
         }
     }
 

@@ -9,7 +9,7 @@ public class RegistrationUI : MonoBehaviour
 {
     public static Action<string, string, string> OnContinueClickedReg;
 
-    [HideInInspector] public AuthorizationUI Authorization;
+    [HideInInspector] public AuthenticationUI Authorization;
     
     [SerializeField] private Button _continueButton;
 

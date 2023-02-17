@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Extensions;
 
 public class LoginFirebase : MonoBehaviour
 {
-    [SerializeField] private AuthorizationUI _authUI;
+    [SerializeField] private AuthenticationUI _authUI;
     private FirebaseUser _user;
+
 
     void OnEnable()
     {
@@ -61,8 +63,7 @@ public class LoginFirebase : MonoBehaviour
         }
         else
         {
-            Debug.Log("Logged");
-            _authUI.HideErrorText();
+            AuthManager.GoToMainMenu();
         }
         // else
         // {

@@ -8,7 +8,7 @@ using Firebase.Database;
 
 public class RegistrationFirebase : MonoBehaviour
 {
-    [SerializeField] private AuthorizationUI _authUI;
+    [SerializeField] private AuthenticationUI _authUI;
     
     private FirebaseUser _user;
 
@@ -75,8 +75,7 @@ public class RegistrationFirebase : MonoBehaviour
                 else
                 {
                     StartCoroutine(AddUserName(name));
-                    Debug.Log("Registered");
-                    _authUI.HideErrorText();
+                    AuthManager.GoToMainMenu();
                 }
             }
         }
