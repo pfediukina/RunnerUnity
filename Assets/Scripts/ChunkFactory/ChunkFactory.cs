@@ -21,12 +21,12 @@ public class ChunkFactory : BaseFactory<Chunk>
         if(lastChunk == null)
             pos = transform.position;
         else
-            pos = lastChunk.transform.position + Vector3.right * Prefab.GetSize().x;
+            pos = lastChunk.transform.position + Vector3.right * Prefab.GetLength();
 
         for(int i = 0; i < count; i++)
         {
             SetNewChunk(pos);
-            pos += Vector3.right  * Prefab.GetSize().x;
+            pos += Vector3.right  * Prefab.GetLength();
         }
     }
 
@@ -35,7 +35,7 @@ public class ChunkFactory : BaseFactory<Chunk>
         var chunk = factoryObjects.Get();
         chunk.transform.position = pos;
 
-        chunk.SetEndPos(_playerPos.position + Vector3.left * Prefab.GetSize().x / 2 + Vector3.left * 10);
+        chunk.SetEndPos(_playerPos.position + Vector3.left * Prefab.GetLength() / 2 + Vector3.left * 10);
         chunk.Move = true;
 
         lastChunk = chunk;
