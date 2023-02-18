@@ -11,17 +11,24 @@ public class StateMachine
     public StateMachine(Player player)
     {
         _player = player;
+        Initialize();
     } 
 
     public void UpdateState()
     {
-        _currentState.Update(_player);
+        if(_currentState != null)
+            _currentState.Update(_player);
     }
 
     private void Initialize()
     {
         InitStates();
         SetBehaviourByDefault();
+    }
+
+    public void SetState<T>() where T : IState<Player>
+    {
+        SetState(GetState<T>());
     }
 
     private void InitStates()
@@ -36,11 +43,6 @@ public class StateMachine
     {
         var defaultState = GetState<IdleState>();
         SetState(defaultState);
-    }
-
-    private void SetState<T>() where T : IState<Player>
-    {
-        SetState(GetState<T>());
     }
 
     private void SetState(IState<Player> newState)

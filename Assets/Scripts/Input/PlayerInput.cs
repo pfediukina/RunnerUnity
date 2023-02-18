@@ -11,7 +11,7 @@ public class PlayerInput : MonoBehaviour
 
     private PlayerActions _actions;
     private Vector2 _startTouchPos;
-    private float _swipeLength;
+    private float _swipeLength = 10;
 
     void Awake()
     {
@@ -65,7 +65,7 @@ public class PlayerInput : MonoBehaviour
     private Vector2 GetSwipeDirection(Vector2 delta)
     {
         Vector2 swipe = Vector2.zero;
-        if(Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+        if(Mathf.Abs(delta.x) >= Mathf.Abs(delta.y))
         {
             swipe = delta.x < 0 ? Vector2.left : Vector2.right;
         }
