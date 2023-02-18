@@ -7,11 +7,5 @@ public class BaseFactory<T> : MonoBehaviour where T: MonoBehaviour
 {
     [SerializeField] protected T Prefab;
 
-    protected ObjectPool<T> factoryObjects;
-    protected HashSet<T> pooledObjects;
-
-    void Awake()
-    {
-        pooledObjects = new HashSet<T>();
-    }
+    protected ObjectPool<T> factoryObjects; /// ??
 }

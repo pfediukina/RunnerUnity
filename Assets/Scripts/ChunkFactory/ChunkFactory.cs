@@ -4,72 +4,74 @@ using UnityEngine.Pool;
 
 public class ChunkFactory : BaseFactory<Chunk>
 {
-    public float speed { get => _speed;}
+    [SerializeField] private Transform _playerPosition;
 
-    [SerializeField] private float _speed;
-    [SerializeField] private Transform _playerPos;
+    Transform lastChunk;
 
-    private int countOfChunks = 4;
+    private void Awake()
+    {
+        factoryObjects = InitChunks(GameManager.NumberOfChunks);
+    }
 
     private void Start()
     {
-        factoryObjects = InitChunks(countOfChunks + 1);
-        CreateChunks(countOfChunks);
+        SpawnInitialChunks(GameManager.NumberOfChunks);
     }
 
-    private void FixedUpdate()
+    private void SpawnInitialChunks(int amount)
     {
-        //wip
-        foreach(var obj in pooledObjects)
+        CreateChunk(_playerPosition.position);
+        for(int i = 1; i < amount; i++)
         {
-            obj.SetSpeed(_speed);
+            CreateChunk(SpawnPosition());
         }
     }
 
-    private void CreateChunks(int count)
+    private Chunk CreateChunk(Vector3 pos)
     {
-        Vector3 pos = transform.position;
-
-        for(int i = 0; i < count; i++)
-        {
-            var chunk = SetNewChunk(pos);
-            pos += Vector3.right  * Prefab.GetLength();
-        }
-    }
-
-    private Chunk SetNewChunk(Vector3 pos)
-    {
-        var chunk = factoryObjects.Get();
-        pooledObjects.Add(chunk);
+        Chunk chunk = factoryObjects.Get();
         
-        chunk.transform.position = pos;
+        //проверка на подписанный ивент
+        chunk.OnChunkBehindPlayer -= OnChunkBehindPlayer;
+        chunk.OnChunkBehindPlayer += OnChunkBehindPlayer;
 
-        chunk.SetEndPos(_playerPos.position + Vector3.left * Prefab.GetLength() / 2 + Vector3.left * 10);
-        chunk.Move = true;
+        chunk.SetChunk(pos, GetEndPosition());
+        chunk.MoveChunk();
 
-        chunk.OnChunkNearPlayer += OnChunkNearPlayer;
+        lastChunk = chunk.transform;
         return chunk;
     }
 
-    public void OnChunkNearPlayer(Chunk chunk)
+    private void OnChunkBehindPlayer(Chunk chunk)
     {
-        //CreateChunks(1);
-        Vector3 pos = chunk.transform.position + Vector3.right * Prefab.GetLength() * countOfChunks;
-        SetNewChunk(pos);
         factoryObjects.Release(chunk);
+        CreateChunk(SpawnPosition());
     }
 
+    private Vector3 SpawnPosition()
+    {
+        Vector3 position = lastChunk.position + Vector3.right * Prefab.GetLength();
+        return position;
+    }
+
+    private Vector3 GetEndPosition()
+    {
+        Vector3 position = _playerPosition.transform.position + Vector3.left * Prefab.GetLength() + Vector3.left * 10;
+        return position;
+    }
+    
     private ObjectPool<Chunk> InitChunks(int count)
     {
         GameObject chunks = new GameObject("Chunks");
         chunks.transform.position = transform.position;
+
         ObjectPool<Chunk> list = new ObjectPool<Chunk>(createFunc: () =>
             Instantiate(Prefab, chunks.transform),
             actionOnGet: (obj) => obj.gameObject.SetActive(true), 
             actionOnRelease: (obj) => obj.gameObject.SetActive(false), 
             actionOnDestroy: (obj) => Destroy(obj), 
             collectionCheck: false,
-            maxSize: 6);
+            maxSize: count);
 
         return list;
     }

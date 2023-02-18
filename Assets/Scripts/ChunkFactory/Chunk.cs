@@ -5,35 +5,30 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    [HideInInspector] public bool Move = false;
     [SerializeField] MeshRenderer _meshRenderer;
     
-    public Action<Chunk> OnChunkNearPlayer;
+    public Action<Chunk> OnChunkBehindPlayer;
 
     private Vector3 _endPos;
-    private float _speed = 1;
 
-    public void Update()
+    void Update()
     {
-        if(Move)
+        MoveChunk();
+    }
+
+    public void MoveChunk()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, _endPos, Time.deltaTime * GameManager.Speed);
+        if(Vector3.Distance(transform.position, _endPos) == 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _endPos, Time.deltaTime * _speed);
-            if(Vector3.Distance(transform.position, _endPos) < 0.1f)
-            {
-                OnChunkNearPlayer.Invoke(this);
-                Move = false;
-            }
+            OnChunkBehindPlayer?.Invoke(this);
         }
     }
 
-    public void SetSpeed(float speed)
+    public void SetChunk(Vector3 startPos, Vector3 endPos)
     {
-        _speed = speed;
-    }
-
-    public void SetEndPos(Vector3 pos)
-    {
-        _endPos = pos;
+        transform.position = startPos;
+        _endPos = endPos;
         _endPos.y = 0;
     }
 
