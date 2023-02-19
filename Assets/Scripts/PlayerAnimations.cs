@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public class PlayerAnimations
     public PlayerAnimations(Animator animator)
     {
         _animator = animator;
+        GameManager.OnGameSpeedChanged += SetIdleAnimationSpeed;
+        SetIdleAnimationSpeed(1);
     }
 
     public void PlayStateAnimation(int animationID)
@@ -22,4 +25,22 @@ public class PlayerAnimations
     {
         _animator.SetFloat("SpeedY", speed);
     }
+
+    public void SetRollAnimationSpeed(float speed)
+    {
+        var s = 1 / speed;
+        _animator.SetFloat("RollSpeed", s);
+    }
+
+    public void SetIdleAnimationSpeed(float speed)
+    {
+        var s = speed / GameManager.MaxSpeed + 1;
+        _animator.SetFloat("IdleSpeed", s);
+    }
+
+    public void SetIdleAnimationSpeed()
+    {
+        SetIdleAnimationSpeed(GameManager.Speed);
+    }
+
 }

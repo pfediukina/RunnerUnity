@@ -35,9 +35,9 @@ public class IdleState : IState<Player>
             owner.StateMachine.SetState<RollState>();
         else
         {
-            owner.StateMachine.GetState<SideStepState>().
+            owner.StateMachine.GetState<StepState>().
                     SetDirection(swipeDirection);
-            owner.StateMachine.SetState<SideStepState>();
+            owner.StateMachine.SetState<StepState>();
         }
     }
 }

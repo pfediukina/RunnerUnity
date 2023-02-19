@@ -43,7 +43,16 @@ public class PlayerInput : MonoBehaviour
 
     private void GetKeyDirection(Vector2 direction)
     {
-        OnSwipe?.Invoke(direction);
+        var d = Vector2.zero;
+        if(direction.x != 0)
+        {
+            d = direction.x < 0 ? Vector2.left : Vector2.right;
+        }
+        else if(direction.y != 0)
+        {
+            d = direction.y < 0 ? Vector2.down : Vector2.up;
+        }
+        OnSwipe?.Invoke(d);
     }
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx)

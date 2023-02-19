@@ -6,15 +6,17 @@ public class Player : MonoBehaviour
     public Rigidbody RigidBody { get => _rb; }
     public StateMachine StateMachine { get => _stateMachine; }
     public PlayerAnimations PlayerAnimator { get => _animator; }
-    public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, mask);
+    public PlayerSettings PlayerSettings { get => _settings; }
+    public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, PlayerSettings.GroundLayer);
 
     public Action<Vector2, Player> OnPlayerSwipe;
+    
+    
+    [SerializeField] private PlayerSettings _settings;
 
     private StateMachine _stateMachine;
     private PlayerAnimations _animator;
     private Rigidbody _rb;
-
-    public LayerMask mask; //test
 
     [SerializeField] private Transform _groundChecker;
 

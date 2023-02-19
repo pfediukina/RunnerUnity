@@ -5,10 +5,12 @@ using UnityEngine;
 public class StateMachine
 {
     public IState<Player> CurrentState { get => _currentState;}
+    public IState<Player> PreviousState { get => _previousState;}
 
     private Player _player;
     private Dictionary<Type, IState<Player>> _statesMap;
     private IState<Player> _currentState;
+    private IState<Player> _previousState;
 
     public StateMachine(Player player)
     {
@@ -46,7 +48,7 @@ public class StateMachine
         _statesMap[typeof(IdleState)] = new IdleState();
         _statesMap[typeof(JumpState)] = new JumpState();
         _statesMap[typeof(RollState)] = new RollState();
-        _statesMap[typeof(SideStepState)] = new SideStepState();
+        _statesMap[typeof(StepState)] = new StepState();
     }
 
     private void SetBehaviourByDefault()
@@ -60,7 +62,8 @@ public class StateMachine
         if(_currentState != null)
             _currentState.Exit(_player);
 
+        _previousState = _currentState;
         _currentState = newState;
-        _currentState.Enter(_player);
+        newState.Enter(_player);
     }
 }

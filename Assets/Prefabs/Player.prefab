@@ -90,10 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f60e033d2bbed489f18474650e621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempJump: 15
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
+  _settings: {fileID: 11400000, guid: 61bb63199c31d3f4da4f9ff541ede6c3, type: 2}
   _groundChecker: {fileID: 3852215075750139195}
 --- !u!1 &3559230453515913009
 GameObject:

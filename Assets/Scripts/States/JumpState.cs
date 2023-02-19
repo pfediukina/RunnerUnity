@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class JumpState : IState<Player>
 {
-    private int _animationName = Animator.StringToHash("JumpStart");
-
-    private float _jumpForce = 15;
+    private int _animationStartID = Animator.StringToHash("JumpStart");
+    private int _animationLoopID = Animator.StringToHash("JumpLoop");
 
     public void Enter(Player owner)
     {
@@ -31,12 +30,17 @@ public class JumpState : IState<Player>
 
     private void Jump(Player owner)
     {
+        if(owner.StateMachine.PreviousState is StepState)
+        {
+            owner.PlayerAnimator.PlayStateAnimation(_animationLoopID);
+            return;
+        } 
+
         var rb = owner.RigidBody;
-        
         if(rb != null)
         {
-            rb.AddForce(Vector3.up * _jumpForce, ForceMode.VelocityChange);
-            owner.PlayerAnimator.PlayStateAnimation(_animationName);
+            rb.AddForce(Vector3.up * owner.PlayerSettings.JumpForce, ForceMode.VelocityChange);
+            owner.PlayerAnimator.PlayStateAnimation(_animationStartID);
         }
     }
 
@@ -45,12 +49,11 @@ public class JumpState : IState<Player>
         if(swipeDirection == Vector2.down)
             owner.StateMachine.SetState<RollState>();
         
-        // else if(swipeDirection != Vector2.up) 
-        // {
-        //     owner.StateMachine.GetState<SideStepState>().
-        //             SetDirection(swipeDirection);
-        //     owner.StateMachine.SetState<SideStepState>();
-        // }
+        else if(swipeDirection != Vector2.up) 
+        {
+            owner.StateMachine.GetState<StepState>().SetDirection(swipeDirection);
+            owner.StateMachine.SetState<StepState>();
+        }
     }
 }
 

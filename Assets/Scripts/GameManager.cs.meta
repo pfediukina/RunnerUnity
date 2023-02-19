@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - _gameSettings: {fileID: 11400000, guid: a6e53480e0c84754a9c35327a900ef02, type: 2}
-  executionOrder: 400
+  executionOrder: -20
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

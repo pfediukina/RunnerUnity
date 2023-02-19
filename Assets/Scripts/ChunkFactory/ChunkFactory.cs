@@ -4,8 +4,6 @@ using UnityEngine.Pool;
 
 public class ChunkFactory : BaseFactory<Chunk>
 {
-    [SerializeField] private Transform _playerPosition;
-
     Transform lastChunk;
 
     private void Awake()
@@ -20,7 +18,8 @@ public class ChunkFactory : BaseFactory<Chunk>
 
     private void SpawnInitialChunks(int amount)
     {
-        CreateChunk(_playerPosition.position);
+        CreateChunk(transform.position);
+
         for(int i = 1; i < amount; i++)
         {
             CreateChunk(SpawnPosition());
@@ -30,15 +29,13 @@ public class ChunkFactory : BaseFactory<Chunk>
     private Chunk CreateChunk(Vector3 pos)
     {
         Chunk chunk = factoryObjects.Get();
+        lastChunk = chunk.transform;
         
-        //проверка на подписанный ивент
         chunk.OnChunkBehindPlayer -= OnChunkBehindPlayer;
         chunk.OnChunkBehindPlayer += OnChunkBehindPlayer;
 
         chunk.SetChunk(pos, GetEndPosition());
         chunk.MoveChunk();
-
-        lastChunk = chunk.transform;
         return chunk;
     }
 
@@ -50,13 +47,13 @@ public class ChunkFactory : BaseFactory<Chunk>
 
     private Vector3 SpawnPosition()
     {
-        Vector3 position = lastChunk.position + Vector3.right * Prefab.GetLength();
+        Vector3 position = lastChunk.position + Vector3.forward * Prefab.GetLength();
         return position;
     }
 
     private Vector3 GetEndPosition()
     {
-        Vector3 position = transform.position + Vector3.left * Prefab.GetLength() + Vector3.left * 10;
+        Vector3 position = transform.position + Vector3.back * Prefab.GetLength() + Vector3.back * 5;
         return position;
     }
     

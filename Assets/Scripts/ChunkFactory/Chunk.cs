@@ -29,16 +29,15 @@ public class Chunk : MonoBehaviour
     {
         transform.position = startPos;
         _endPos = endPos;
-        _endPos.y = 0;
     }
 
     public float GetWidth()
     {
-        return _meshRenderer.bounds.size.z;
+        return _meshRenderer.bounds.size.x;
     }
 
     public float GetLength()
     {
-        return _meshRenderer.bounds.size.x;
+        return _meshRenderer.bounds.size.z;
     }
 }
