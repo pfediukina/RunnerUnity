@@ -56,7 +56,7 @@ public class ChunkFactory : BaseFactory<Chunk>
 
     private Vector3 GetEndPosition()
     {
-        Vector3 position = _playerPosition.transform.position + Vector3.left * Prefab.GetLength() + Vector3.left * 10;
+        Vector3 position = transform.position + Vector3.left * Prefab.GetLength() + Vector3.left * 10;
         return position;
     }
     

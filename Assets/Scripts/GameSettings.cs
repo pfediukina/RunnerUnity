@@ -5,4 +5,6 @@ public class GameSettings : ScriptableObject
 {
     public float StartSpeed;
     public int NumberOfChunks;
+    public int NumberOfLines;
+    public int StartLine;
 }

@@ -12,12 +12,12 @@ public class LoginFirebase : MonoBehaviour
     private FirebaseUser _user;
 
 
-    void OnEnable()
+    private void OnEnable()
     {
         LoginUI.OnContinueClickedLog += LoginUser;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         LoginUI.OnContinueClickedLog -= LoginUser;
     }

@@ -48,6 +48,78 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Keyboard",
+            "id": "721ac547-0001-470f-bbb7-eb84034d0e9e",
+            "actions": [
+                {
+                    "name": "WASD",
+                    "type": "Value",
+                    "id": "b90531f2-4fd5-4eca-80cd-a874574a52fa",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "a09665b5-26ef-41cc-bfda-1e07bdc85ffb",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "330f3ada-ef03-4e4c-ac7f-a5985f29b37d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "74bdf7cc-60df-45c0-9789-b7f4ccd4a353",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "a051e02a-03a6-49d8-be0f-3f4ab31b3d67",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "a84172b9-626f-4ca3-bd7d-962bc156c7e3",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": []

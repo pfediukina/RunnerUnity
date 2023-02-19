@@ -11,7 +11,7 @@ public class Chunk : MonoBehaviour
 
     private Vector3 _endPos;
 
-    void Update()
+    private void Update()
     {
         MoveChunk();
     }

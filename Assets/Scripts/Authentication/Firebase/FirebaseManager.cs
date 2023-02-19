@@ -9,12 +9,12 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseAuth Auth;
     public static DatabaseReference Database;
 
-    void Awake()
+    private void Awake()
     {
         InitializeFirebase();
     }
 
-    void Start()
+    private void Start()
     {
        CheckUser();
     }

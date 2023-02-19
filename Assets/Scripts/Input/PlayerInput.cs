@@ -13,23 +13,23 @@ public class PlayerInput : MonoBehaviour
     private Vector2 _startTouchPos;
     private float _swipeLength = 10;
 
-    void Awake()
+    private void Awake()
     {
         if(_actions == null)
             _actions = new PlayerActions();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         _actions.Enable();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         _actions.Disable();
     }
 
-    void Start()
+    private void Start()
     {
         Bind();
     }
@@ -38,6 +38,12 @@ public class PlayerInput : MonoBehaviour
     {
         _actions.Touch.PrimaryTouch.started += ctx => StartTouchPrimary(ctx);
         _actions.Touch.PrimaryTouch.canceled += ctx => EndTouchPrimary(ctx);
+        _actions.Keyboard.WASD.performed += ctx => GetKeyDirection(_actions.Keyboard.WASD.ReadValue<Vector2>());
+    }
+
+    private void GetKeyDirection(Vector2 direction)
+    {
+        OnSwipe?.Invoke(direction);
     }
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx)

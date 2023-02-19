@@ -12,12 +12,12 @@ public class RegistrationFirebase : MonoBehaviour
     
     private FirebaseUser _user;
 
-    void OnEnable()
+    private void OnEnable()
     {
         RegistrationUI.OnContinueClickedReg += RegisterUser;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         RegistrationUI.OnContinueClickedReg -= RegisterUser;
     }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartSpeed: 10
   NumberOfChunks: 10
+  NumberOfLines: 3
+  StartLine: 1

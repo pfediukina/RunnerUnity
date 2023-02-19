@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3083598833024944139}
   - component: {fileID: 8783627242677335771}
   - component: {fileID: 1037873333334406981}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781cae91bcd03b14fbebe63b4d4344f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Move: 0
   _meshRenderer: {fileID: 3083598834095393351}
 --- !u!65 &1037873333334406981
 BoxCollider:
@@ -72,7 +71,7 @@ GameObject:
   - component: {fileID: 3083598834095393369}
   - component: {fileID: 3083598834095393348}
   - component: {fileID: 3083598834095393351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -70,6 +70,78 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Keyboard"",
+            ""id"": ""721ac547-0001-470f-bbb7-eb84034d0e9e"",
+            ""actions"": [
+                {
+                    ""name"": ""WASD"",
+                    ""type"": ""Value"",
+                    ""id"": ""b90531f2-4fd5-4eca-80cd-a874574a52fa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""a09665b5-26ef-41cc-bfda-1e07bdc85ffb"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WASD"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""330f3ada-ef03-4e4c-ac7f-a5985f29b37d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""74bdf7cc-60df-45c0-9789-b7f4ccd4a353"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a051e02a-03a6-49d8-be0f-3f4ab31b3d67"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""a84172b9-626f-4ca3-bd7d-962bc156c7e3"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -78,6 +150,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
         m_Touch_PrimaryTouch = m_Touch.FindAction("PrimaryTouch", throwIfNotFound: true);
         m_Touch_PrimaryPosition = m_Touch.FindAction("PrimaryPosition", throwIfNotFound: true);
+        // Keyboard
+        m_Keyboard = asset.FindActionMap("Keyboard", throwIfNotFound: true);
+        m_Keyboard_WASD = m_Keyboard.FindAction("WASD", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -174,9 +249,46 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         }
     }
     public TouchActions @Touch => new TouchActions(this);
+
+    // Keyboard
+    private readonly InputActionMap m_Keyboard;
+    private IKeyboardActions m_KeyboardActionsCallbackInterface;
+    private readonly InputAction m_Keyboard_WASD;
+    public struct KeyboardActions
+    {
+        private @PlayerActions m_Wrapper;
+        public KeyboardActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @WASD => m_Wrapper.m_Keyboard_WASD;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KeyboardActions set) { return set.Get(); }
+        public void SetCallbacks(IKeyboardActions instance)
+        {
+            if (m_Wrapper.m_KeyboardActionsCallbackInterface != null)
+            {
+                @WASD.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnWASD;
+                @WASD.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnWASD;
+                @WASD.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnWASD;
+            }
+            m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @WASD.started += instance.OnWASD;
+                @WASD.performed += instance.OnWASD;
+                @WASD.canceled += instance.OnWASD;
+            }
+        }
+    }
+    public KeyboardActions @Keyboard => new KeyboardActions(this);
     public interface ITouchActions
     {
         void OnPrimaryTouch(InputAction.CallbackContext context);
         void OnPrimaryPosition(InputAction.CallbackContext context);
+    }
+    public interface IKeyboardActions
+    {
+        void OnWASD(InputAction.CallbackContext context);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StateMachine
 {
+    public IState<Player> CurrentState { get => _currentState;}
+
     private Player _player;
     private Dictionary<Type, IState<Player>> _statesMap;
     private IState<Player> _currentState;
@@ -31,12 +33,20 @@ public class StateMachine
         SetState(GetState<T>());
     }
 
+    public T GetState<T>() where T : IState<Player>
+    {
+        var type = typeof(T); //NEED TEST
+        return (T)_statesMap[type];
+    }
+
     private void InitStates()
     {
         _statesMap = new Dictionary<Type, IState<Player>>();
 
         _statesMap[typeof(IdleState)] = new IdleState();
         _statesMap[typeof(JumpState)] = new JumpState();
+        _statesMap[typeof(RollState)] = new RollState();
+        _statesMap[typeof(SideStepState)] = new SideStepState();
     }
 
     private void SetBehaviourByDefault()
@@ -52,11 +62,5 @@ public class StateMachine
 
         _currentState = newState;
         _currentState.Enter(_player);
-    }
-
-    private IState<Player> GetState<T>() where T : IState<Player>
-    {
-        var type = typeof(T);
-        return _statesMap[type];
     }
 }
