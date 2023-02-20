@@ -5,9 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+    public static   GameManager Singelton=>_instance;
 
     public static Action OnGameSpeedChanged;
 
+
+    //wip
     public static float Speed { get => _instance._speed; }
     public static int NumberOfChunks { get => _instance._gameSettings.NumberOfChunks; }
     public static int NumberOfLines { get => _instance._gameSettings.NumberOfLines; }
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(IncreaseSpeed());
     }
+
 
     private void Initialize()
     {

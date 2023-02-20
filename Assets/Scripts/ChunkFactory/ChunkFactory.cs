@@ -18,15 +18,15 @@ public class ChunkFactory : BaseFactory<Chunk>
 
     private void SpawnInitialChunks(int amount)
     {
-        CreateChunk(transform.position);
+        SpawnChunk(transform.position);
 
         for(int i = 1; i < amount; i++)
         {
-            CreateChunk(SpawnPosition());
+            SpawnChunk(SpawnPosition());
         }
     }
 
-    private Chunk CreateChunk(Vector3 pos)
+    private Chunk SpawnChunk(Vector3 pos)
     {
         Chunk chunk = factoryObjects.Get();
         lastChunk = chunk.transform;
@@ -42,7 +42,7 @@ public class ChunkFactory : BaseFactory<Chunk>
     private void OnChunkBehindPlayer(Chunk chunk)
     {
         factoryObjects.Release(chunk);
-        CreateChunk(SpawnPosition());
+        SpawnChunk(SpawnPosition());
     }
 
     private Vector3 SpawnPosition()

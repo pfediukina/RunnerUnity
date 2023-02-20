@@ -4,13 +4,13 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     [Header("Chunks")]
-    public int NumberOfChunks;
-    public int NumberOfLines;
+    [Range(0, 20)]public int NumberOfChunks;
+    [Range(0, 5)]public int NumberOfLines;
     public int StartLine;
     
     [Header("Game")]
-    public float StartSpeed;
-    public float SpeedMultiplier;
-    public float SpeedIncreaseTime;
-    public float MaxSpeed;
+    [Range(0, 10)]public float StartSpeed;
+    [Range(0, 20)]public float SpeedMultiplier;
+    [Range(0, 50)]public float SpeedIncreaseTime;
+    [Range(0, 100)]public float MaxSpeed;
 }

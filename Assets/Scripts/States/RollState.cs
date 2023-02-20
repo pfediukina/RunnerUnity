@@ -6,23 +6,16 @@ public class RollState : IState<Player>
 {
     private int _animationName = Animator.StringToHash("Roll");
     private float _rollTimer;
+    private float _previousEnterTime = -1;
 
     //BUG таймер не работает пока идет сайд степ 
 
     public void Enter(Player owner)
     {
         owner.OnPlayerSwipe += ChangeStateWithSwipe;
+        if(_previousEnterTime == -1)
+            _previousEnterTime = Time.time;
         Roll(owner);
-        if(owner.StateMachine.PreviousState is not StepState)
-        {
-            _rollTimer = 0;
-            Debug.Log(owner.StateMachine.PreviousState.GetType() + " +");
-        }
-        else
-        {
-            Debug.Log(owner.StateMachine.PreviousState.GetType() + " -");
-        }
-
         owner.PlayerAnimator.SetRollAnimationSpeed(owner.PlayerSettings.RollDuration);
     }
 
@@ -40,8 +33,25 @@ public class RollState : IState<Player>
 
     private void Roll(Player owner)
     {
+        if(owner.StateMachine.PreviousState is not StepState)
+        {
+            _rollTimer = 0;
+            _previousEnterTime = -1;
+        }
+        else
+        {
+            if(_previousEnterTime != -1)
+            {
+                if(Time.time - _previousEnterTime > owner.PlayerSettings.RollDuration)
+                {
+                    Debug.Log ("End");
+                   // _rollTimer =   wner.PlayerSettings.RollDuration
+                    owner.StateMachine.SetState<IdleState>();
+                }
+            }
+        }
+
         owner.RigidBody.AddForce(Vector3.down * owner.PlayerSettings.DropForce, ForceMode.VelocityChange);
-        
         owner.PlayerAnimator.PlayStateAnimation(_animationName);
     }
 
