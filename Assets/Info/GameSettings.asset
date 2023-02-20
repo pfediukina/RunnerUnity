@@ -19,3 +19,4 @@ MonoBehaviour:
   SpeedMultiplier: 10
   SpeedIncreaseTime: 10
   MaxSpeed: 100
+  LineDistance: 3.5

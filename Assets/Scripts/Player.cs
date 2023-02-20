@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, PlayerSettings.GroundLayer);
 
     public Action<Vector2, Player> OnPlayerMove;
+    public Action<Player> OnPlayerUpdate;
     
     
     [SerializeField] private PlayerSettings _settings;
@@ -40,6 +41,8 @@ public class Player : MonoBehaviour
     {
         if(_stateMachine != null)
             _stateMachine.UpdateState();
+        if(_line != null)
+            _line.UpdateLine(this);
     }
 
 

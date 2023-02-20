@@ -3,16 +3,17 @@ using UnityEngine;
 public class PlayerLine
 {
     private bool _isRight;
-    private ushort _currentLine;
-    private ushort _line;
+    private int _line;
+    private int _prevLine;
+    private float _stepTimer;
+
     private float[] _linesPosX;
 
     public PlayerLine(Player player)
     {
         player.OnPlayerMove += GetPlayerInput;
-        _line = (ushort)GameManager.GameSettings.StartLine;
+        _line = GameManager.GameSettings.StartLine;
         CalculateLinesPositionX(player);
-        ChangePlayerLine(player);
     }
 
     private void GetPlayerInput(Vector2 direction, Player player)
@@ -20,25 +21,35 @@ public class PlayerLine
         if(direction == Vector2.up || direction == Vector2.down) return;
         
         _isRight = direction == Vector2.right ? true : false;
-        var lastLine = _line; 
-        _line += (ushort)(_isRight ? 1 : -1); 
+        _prevLine = _line;
+        
+        _line += _isRight ? 1 : -1; 
+        _line = Mathf.Clamp(_line, 0, GameManager.GameSettings.NumberOfLines - 1);
+        
+        _stepTimer = 0;
+    }
 
-        _line = (ushort)(Mathf.Clamp(_line, 0, GameManager.GameSettings.NumberOfLines - 1));
-        ChangePlayerLine(player);
+    public void UpdateLine(Player player)
+    {
+        if(!IsPlayerOnCurrentLine(player))
+        {
+            _stepTimer += Time.deltaTime;
+            player.transform.position = GetMoveLerp(player);
+        }
+    }
+
+    private bool IsPlayerOnCurrentLine(Player player)
+    {
+        if(player.transform.position.x != _linesPosX[_line]) return false;
+        return true;
     }
 
     //WIP
-    private void ChangePlayerLine(Player player)
+    private Vector3 GetMoveLerp(Player player)
     {
-        var offsetX = Vector3.right * (_linesPosX[_line] - player.transform.position.x);
-        Debug.Log(_linesPosX[_line] + " - " + player.transform.position.x + " = " + offsetX);
-        player.transform.position += offsetX;
-    }
-
-    private void ChangePlayerLine(Player player, ushort new_line)
-    {   
-        _line = new_line;
-        ChangePlayerLine(player);
+        float newX = Mathf.Lerp(player.transform.position.x, _linesPosX[_line], _stepTimer / player.PlayerSettings.StepDuration);
+        Vector3 offset = new Vector3(newX, player.transform.position.y, player.transform.position.z);
+        return offset;
     }
 
     private void CalculateLinesPositionX(Player owner)
