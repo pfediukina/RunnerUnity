@@ -14,12 +14,6 @@ public class GameManager : MonoBehaviour
 
     //wip
     public static float Speed { get => _instance._speed; }
-    
-    public static int NumberOfChunks { get => _instance._gameSettings.NumberOfChunks; }
-    public static int NumberOfLines { get => _instance._gameSettings.NumberOfLines; }
-    public static int StartLine { get => _instance._gameSettings.StartLine; }
-    public static float MaxSpeed { get => _instance._gameSettings.MaxSpeed; }
-    public static float StartSpeed { get => _instance._gameSettings.StartSpeed; }
 
     private float _speed;
 

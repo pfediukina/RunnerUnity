@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour
     {
         _actions.Enable();
     }
-
+    
     private void OnDisable()
     {
         _actions.Disable();

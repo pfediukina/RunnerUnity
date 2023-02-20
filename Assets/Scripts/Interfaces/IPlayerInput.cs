@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 
-
-//get direction
 public interface IPlayerInput
 {
     public delegate void DirectionInputEvent(Vector2 direction);

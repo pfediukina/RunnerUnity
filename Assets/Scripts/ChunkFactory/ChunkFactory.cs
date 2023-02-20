@@ -8,12 +8,12 @@ public class ChunkFactory : BaseFactory<Chunk>
 
     private void Awake()
     {
-        factoryObjects = InitChunks(GameManager.NumberOfChunks);
+        factoryObjects = InitChunks(GameManager.GameSettings.NumberOfChunks);
     }
 
     private void Start()
     {
-        SpawnInitialChunks(GameManager.NumberOfChunks);
+        SpawnInitialChunks(GameManager.GameSettings.NumberOfChunks);
     }
 
     private void SpawnInitialChunks(int amount)

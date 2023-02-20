@@ -34,7 +34,7 @@ public class PlayerAnimations
 
     public void SetIdleAnimationSpeed(float speed)
     {
-        var s = speed / GameManager.MaxSpeed + 1;
+        var s = speed / GameManager.GameSettings.MaxSpeed + 1;
         _animator.SetFloat("IdleSpeed", s);
     }
 

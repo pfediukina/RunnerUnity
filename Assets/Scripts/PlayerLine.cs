@@ -54,15 +54,15 @@ public class PlayerLine
 
     private void CalculateLinesPositionX(Player owner)
     {
-        _linesPosX = new float[GameManager.NumberOfLines]; 
-        _linesPosX[GameManager.StartLine] = owner.transform.position.x;
+        _linesPosX = new float[GameManager.GameSettings.NumberOfLines]; 
+        _linesPosX[GameManager.GameSettings.StartLine] = owner.transform.position.x;
 
-        for(int i = 0; i < GameManager.NumberOfLines; i++)
+        for(int i = 0; i < GameManager.GameSettings.NumberOfLines; i++)
         {
-            if(i == GameManager.StartLine) continue;
+            if(i == GameManager.GameSettings.StartLine) continue;
             _linesPosX[i] = GameManager.GameSettings.LineDistance *
-                                (i - GameManager.StartLine) + 
-                                _linesPosX[GameManager.StartLine];
+                                (i - GameManager.GameSettings.StartLine) + 
+                                _linesPosX[GameManager.GameSettings.StartLine];
         }
     }
 }

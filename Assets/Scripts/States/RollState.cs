@@ -39,8 +39,8 @@ public class RollState : IState<Player>
     {
         if(swipeDirection == Vector2.up && owner.IsGrounded)
         {
-            owner.StateMachine.SetState<JumpState>();
             owner.RigidBody.velocity = Vector3.zero;
+            owner.StateMachine.SetState<JumpState>();
         }
     }
 }
