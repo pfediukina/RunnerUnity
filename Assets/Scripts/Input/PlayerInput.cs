@@ -7,11 +7,10 @@ using System;
 
 public class PlayerInput : MonoBehaviour
 {
-    public static Action<Vector2> OnMove;
+    public static Action<Vector2> OnInput;
 
     private PlayerActions _actions;
-    private Vector2 _startTouchPos;
-    private float _swipeLength = 10;
+    private List<IPlayerInput> _inputs = new List<IPlayerInput>();
 
     private void Awake()
     {
@@ -31,73 +30,22 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
-        Bind();
+        InitControls();
     }
 
-    private void Bind()
+    private void InitControls()
     {
-        _actions.Touch.PrimaryTouch.started += ctx => StartTouchPrimary(ctx);
-        _actions.Touch.PrimaryTouch.canceled += ctx => EndTouchPrimary(ctx);
+        _inputs.Add(new TouchInput(_actions));
+        _inputs.Add(new KeyboardInput(_actions));
 
-        _actions.Keyboard.WASD.performed += ctx => GetKeyDirection(_actions.Keyboard.WASD.ReadValue<Vector2>());
-    }
-
-    private void GetKeyDirection(Vector2 direction)
-    {
-        var d = Vector2.zero;
-        if(direction.x != 0)
-        {
-            d = direction.x < 0 ? Vector2.left : Vector2.right;
-        }
-        else if(direction.y != 0)
-        {
-            d = direction.y < 0 ? Vector2.down : Vector2.up;
-        }
-        OnMove?.Invoke(d);
-    }
-
-    private void InvokeDirection(Vector2 direction)
-    {
-        OnMove?.Invoke(direction);
-    }
-
-    private void StartTouchPrimary(InputAction.CallbackContext ctx)
-    {
-        _startTouchPos = _actions.Touch.PrimaryPosition.ReadValue<Vector2>();
-    }
-
-    private void EndTouchPrimary(InputAction.CallbackContext ctx)
-    {
-        Vector2 endPos = _actions.Touch.PrimaryPosition.ReadValue<Vector2>();
-        if(IsSwipe(_startTouchPos, endPos))
-        {
-            var swipeDir = GetSwipeDirection(endPos - _startTouchPos);
-            OnMove?.Invoke(swipeDir);
+        foreach (IPlayerInput input in _inputs)
+        {   
+            input.OnDirectionInput += Input_OnDirectionInput;
         }
     }
 
-    private bool IsSwipe(Vector2 start, Vector2 end)
+    private void Input_OnDirectionInput(Vector2 direction)
     {
-        if(Vector2.Distance(start, end) > _swipeLength) return true;
-        return false;
+        OnInput?.Invoke(direction);
     }
-
-    private Vector2 GetSwipeDirection(Vector2 delta)
-    {
-        
-        Vector2 swipe = Vector2.zero;
-        
-        if(Mathf.Abs(delta.x) >= Mathf.Abs(delta.y))
-        {
-            swipe = delta.x < 0 ? Vector2.left : Vector2.right;
-        }
-        else
-        {
-            swipe = delta.y < 0 ? Vector2.down : Vector2.up;
-        }
-        
-        return swipe;
-        
-    }
-
 }

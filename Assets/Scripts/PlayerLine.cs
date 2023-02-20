@@ -11,7 +11,7 @@ public class PlayerLine
 
     public PlayerLine(Player player)
     {
-        player.OnPlayerMove += GetPlayerInput;
+        player.OnPlayerInput += GetPlayerInput;
         _line = GameManager.GameSettings.StartLine;
         CalculateLinesPositionX(player);
     }

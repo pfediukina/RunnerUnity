@@ -7,13 +7,13 @@ public class IdleState : IState<Player>
 
     public void Enter(Player owner)
     {
-        owner.OnPlayerMove += ChangeStateWithSwipe;
+        owner.OnPlayerInput += ChangeStateWithSwipe;
         Idle(owner);
     }
 
     public void Exit(Player owner)
     {
-        owner.OnPlayerMove -= ChangeStateWithSwipe;
+        owner.OnPlayerInput -= ChangeStateWithSwipe;
     }
 
     public void Update(Player owner)

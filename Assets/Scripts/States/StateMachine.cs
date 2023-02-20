@@ -21,7 +21,10 @@ public class StateMachine
     public void UpdateState()
     {
         if(_currentState != null)
+        {
             _currentState.Update(_player);
+            Debug.Log(_currentState.GetType());
+        }
     }
 
     private void Initialize()
@@ -38,6 +41,7 @@ public class StateMachine
 
         _previousState = _currentState;
         _currentState = newState;
+        
         newState.Enter(_player);
     }
 

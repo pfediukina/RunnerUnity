@@ -9,21 +9,21 @@ public class JumpState : IState<Player>
 
     public void Enter(Player owner)
     {
-        owner.OnPlayerMove += ChangeStateWithSwipe;
+        owner.OnPlayerInput += ChangeStateWithSwipe;
         Jump(owner);
     }
 
     public void Exit(Player owner)
     {
-        owner.OnPlayerMove -= ChangeStateWithSwipe;
+        owner.OnPlayerInput -= ChangeStateWithSwipe;
     }
 
     public void Update(Player owner)
     {
         owner.PlayerAnimator.SetPlayerSpeedY(owner.RigidBody.velocity.y);
-        //Debug.Log(owner.IsGrounded);
         if(owner.IsGrounded && owner.RigidBody.velocity.y < 0)
         {
+            Debug.Log("true");
             owner.StateMachine.SetState<IdleState>();
         }
     }
@@ -33,7 +33,7 @@ public class JumpState : IState<Player>
         var rb = owner.RigidBody;
         if(rb != null)
         {
-            rb.AddForce(Vector3.up * owner.PlayerSettings.JumpForce, ForceMode.VelocityChange);
+            rb.velocity = Vector3.up * owner.PlayerSettings.JumpForce;
             owner.PlayerAnimator.PlayStateAnimation(_animationStartID);
         }
     }
@@ -42,6 +42,5 @@ public class JumpState : IState<Player>
     {
         if(swipeDirection == Vector2.down)
             owner.StateMachine.SetState<RollState>();
-        
     }
 }

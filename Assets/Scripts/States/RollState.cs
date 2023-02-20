@@ -11,14 +11,14 @@ public class RollState : IState<Player>
 
     public void Enter(Player owner)
     {
-        owner.OnPlayerMove += ChangeStateWithSwipe;
+        owner.OnPlayerInput += ChangeStateWithSwipe;
         Roll(owner);
         owner.PlayerAnimator.SetRollAnimationSpeed(owner.PlayerSettings.RollDuration);
     }
 
     public void Exit(Player owner)
     {
-        owner.OnPlayerMove -= ChangeStateWithSwipe;
+        owner.OnPlayerInput -= ChangeStateWithSwipe;
     }
 
     public void Update(Player owner)
@@ -31,7 +31,7 @@ public class RollState : IState<Player>
     private void Roll(Player owner)
     {
         _rollTimer = 0;
-        owner.RigidBody.AddForce(Vector3.down * owner.PlayerSettings.DropForce, ForceMode.VelocityChange);
+        owner.RigidBody.velocity = Vector3.down * owner.PlayerSettings.DropForce;
         owner.PlayerAnimator.PlayStateAnimation(_animationName);
     }
 

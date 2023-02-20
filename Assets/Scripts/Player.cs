@@ -9,9 +9,8 @@ public class Player : MonoBehaviour
     public PlayerSettings PlayerSettings { get => _settings; }
     public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, PlayerSettings.GroundLayer);
 
-    public Action<Vector2, Player> OnPlayerMove;
-    public Action<Player> OnPlayerUpdate;
-    
+    public Action<Vector2, Player> OnPlayerInput;
+    public Action<Player> OnPlayerUpdate;    
     
     [SerializeField] private PlayerSettings _settings;
 
@@ -29,12 +28,12 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInput.OnMove += OnMoved;
+        PlayerInput.OnInput += Input_OnPlayerInput;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnMove -= OnMoved;
+        PlayerInput.OnInput -= Input_OnPlayerInput;
     }
 
     private void Update()
@@ -59,8 +58,8 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    private void OnMoved(Vector2 direction)
+    private void Input_OnPlayerInput(Vector2 direction)
     {
-        OnPlayerMove?.Invoke(direction, this);
+        OnPlayerInput?.Invoke(direction, this);
     }
 }
