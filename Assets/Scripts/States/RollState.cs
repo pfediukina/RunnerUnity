@@ -6,6 +6,7 @@ public class RollState : IState<Player>
 {
     private int _animationName = Animator.StringToHash("Roll");
     private float _rollTimer;
+    private float _colliderPosY = 0.5f;
 
     //BUG таймер не работает пока идет сайд степ 
 
@@ -30,6 +31,10 @@ public class RollState : IState<Player>
 
     private void Roll(Player owner)
     {
+        var colliderPos = owner.Collider.center;
+        colliderPos.y = _colliderPosY;
+        owner.Collider.center = colliderPos;
+
         _rollTimer = 0;
         owner.RigidBody.velocity = Vector3.down * owner.PlayerSettings.DropForce;
         owner.PlayerAnimator.PlayStateAnimation(_animationName);

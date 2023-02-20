@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody RigidBody { get => _rb; }
+    public BoxCollider Collider { get => _collider; }
     public StateMachine StateMachine { get => _stateMachine; }
     public PlayerAnimations PlayerAnimator { get => _animator; }
     public PlayerSettings PlayerSettings { get => _settings; }
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     public Action<Player> OnPlayerUpdate;    
     
     [SerializeField] private PlayerSettings _settings;
+    [SerializeField] private BoxCollider _collider;
 
     private StateMachine _stateMachine;
     private PlayerAnimations _animator;
@@ -44,6 +46,10 @@ public class Player : MonoBehaviour
             _line.UpdateLine(this);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Obs");
+    }
 
     private void InitializeComponents()
     {

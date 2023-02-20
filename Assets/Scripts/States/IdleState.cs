@@ -4,6 +4,7 @@ using UnityEngine;
 public class IdleState : IState<Player>
 {
     private int _animationName = Animator.StringToHash("Idle");
+    private float _colliderPosY = 1.3f;
 
     public void Enter(Player owner)
     {
@@ -23,6 +24,10 @@ public class IdleState : IState<Player>
 
     private void Idle(Player owner)
     {
+        var colliderPos = owner.Collider.center;
+        colliderPos.y = _colliderPosY;
+        owner.Collider.center = colliderPos;
+
         if(owner.PlayerAnimator != null)
             owner.PlayerAnimator.PlayStateAnimation(_animationName);
     }

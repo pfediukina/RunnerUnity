@@ -6,10 +6,12 @@ public class JumpState : IState<Player>
 {
     private int _animationStartID = Animator.StringToHash("JumpStart");
     private int _animationLoopID = Animator.StringToHash("JumpLoop");
+    private float _colliderPosY = 0.5f;
 
     public void Enter(Player owner)
     {
         owner.OnPlayerInput += ChangeStateWithSwipe;
+        owner.Collider.center += Vector3.up * 1.5f;
         Jump(owner);
     }
 
@@ -23,13 +25,17 @@ public class JumpState : IState<Player>
         owner.PlayerAnimator.SetPlayerSpeedY(owner.RigidBody.velocity.y);
         if(owner.IsGrounded && owner.RigidBody.velocity.y < 0)
         {
-            Debug.Log("true");
+           // Debug.Log("true");
             owner.StateMachine.SetState<IdleState>();
         }
     }
 
     private void Jump(Player owner)
     {
+        var colliderPos = owner.Collider.center;
+        colliderPos.y = _colliderPosY;
+        owner.Collider.center = colliderPos;
+
         var rb = owner.RigidBody;
         if(rb != null)
         {

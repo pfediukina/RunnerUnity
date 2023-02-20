@@ -4,11 +4,15 @@ using UnityEngine.Pool;
 
 public class ChunkFactory : BaseFactory<Chunk>
 {
-    Transform lastChunk;
+    private Transform lastChunk;
+    private GameObject _parent;
 
     private void Awake()
     {
-        factoryObjects = InitChunks(GameManager.GameSettings.NumberOfChunks);
+        _parent = new GameObject("Chunks");
+        _parent.transform.parent = transform;
+
+        factoryObjects = InitPool(GameManager.GameSettings.NumberOfChunks, _parent.transform);
     }
 
     private void Start()
@@ -29,6 +33,10 @@ public class ChunkFactory : BaseFactory<Chunk>
     private Chunk SpawnChunk(Vector3 pos)
     {
         Chunk chunk = factoryObjects.Get();
+        if(lastChunk != null) //if not first
+        {   
+            chunk.SetObstacles();
+        }
         lastChunk = chunk.transform;
         
         chunk.OnChunkBehindPlayer -= OnChunkBehindPlayer;
@@ -47,29 +55,13 @@ public class ChunkFactory : BaseFactory<Chunk>
 
     private Vector3 SpawnPosition()
     {
-        Vector3 position = lastChunk.position + Vector3.forward * Prefab.GetLength();
+        Vector3 position = lastChunk.position + Vector3.forward * Chunk.Lenght;
         return position;
     }
 
     private Vector3 GetEndPosition()
     {
-        Vector3 position = transform.position + Vector3.back * Prefab.GetLength() + Vector3.back * 5;
+        Vector3 position = transform.position + Vector3.back * Chunk.Lenght + Vector3.back * 5;
         return position;
-    }
-    
-    private ObjectPool<Chunk> InitChunks(int count)
-    {
-        GameObject chunks = new GameObject("Chunks");
-        chunks.transform.position = transform.position;
-
-        ObjectPool<Chunk> list = new ObjectPool<Chunk>(createFunc: () =>
-            Instantiate(Prefab, chunks.transform),
-            actionOnGet: (obj) => obj.gameObject.SetActive(true), 
-            actionOnRelease: (obj) => obj.gameObject.SetActive(false), 
-            actionOnDestroy: (obj) => Destroy(obj), 
-            collectionCheck: false,
-            maxSize: count);
-
-        return list;
     }
 }

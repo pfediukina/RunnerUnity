@@ -6,10 +6,18 @@ using UnityEngine;
 public class Chunk : MonoBehaviour
 {
     [SerializeField] MeshRenderer _meshRenderer;
+    [SerializeField] ObstacleFactory _obstacleFactory;
+
+    public static float Lenght;
     
     public Action<Chunk> OnChunkBehindPlayer;
 
     private Vector3 _endPos;
+
+    private void Awake()
+    {
+        Lenght = GetLength();
+    }
 
     private void Update()
     {
@@ -25,6 +33,11 @@ public class Chunk : MonoBehaviour
         }
     }
 
+    public void SetObstacles()
+    {
+        _obstacleFactory.SpawnObstacles(this);
+    }
+
     public void SetChunk(Vector3 startPos, Vector3 endPos)
     {
         transform.position = startPos;
@@ -36,7 +49,7 @@ public class Chunk : MonoBehaviour
         return _meshRenderer.bounds.size.x;
     }
 
-    public float GetLength()
+    private float GetLength()
     {
         return _meshRenderer.bounds.size.z;
     }

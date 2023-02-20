@@ -23,7 +23,6 @@ public class StateMachine
         if(_currentState != null)
         {
             _currentState.Update(_player);
-            Debug.Log(_currentState.GetType());
         }
     }
 

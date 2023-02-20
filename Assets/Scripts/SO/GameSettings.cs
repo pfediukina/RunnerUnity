@@ -14,4 +14,7 @@ public class GameSettings : ScriptableObject
     [Range(0, 50)]public float SpeedIncreaseTime;
     [Range(0, 100)]public float MaxSpeed;
     [Range(0, 10)]public float LineDistance;
+
+    [Header("Obstacle")]
+    [Range(0, 20)]public float Distance;
 }
