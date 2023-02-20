@@ -7,7 +7,7 @@ using System;
 
 public class PlayerInput : MonoBehaviour
 {
-    public static Action<Vector2> OnSwipe;
+    public static Action<Vector2> OnMove;
 
     private PlayerActions _actions;
     private Vector2 _startTouchPos;
@@ -38,6 +38,7 @@ public class PlayerInput : MonoBehaviour
     {
         _actions.Touch.PrimaryTouch.started += ctx => StartTouchPrimary(ctx);
         _actions.Touch.PrimaryTouch.canceled += ctx => EndTouchPrimary(ctx);
+
         _actions.Keyboard.WASD.performed += ctx => GetKeyDirection(_actions.Keyboard.WASD.ReadValue<Vector2>());
     }
 
@@ -52,7 +53,12 @@ public class PlayerInput : MonoBehaviour
         {
             d = direction.y < 0 ? Vector2.down : Vector2.up;
         }
-        OnSwipe?.Invoke(d);
+        OnMove?.Invoke(d);
+    }
+
+    private void InvokeDirection(Vector2 direction)
+    {
+        OnMove?.Invoke(direction);
     }
 
     private void StartTouchPrimary(InputAction.CallbackContext ctx)
@@ -66,9 +72,8 @@ public class PlayerInput : MonoBehaviour
         if(IsSwipe(_startTouchPos, endPos))
         {
             var swipeDir = GetSwipeDirection(endPos - _startTouchPos);
-            OnSwipe?.Invoke(swipeDir);
+            OnMove?.Invoke(swipeDir);
         }
-
     }
 
     private bool IsSwipe(Vector2 start, Vector2 end)
@@ -79,7 +84,9 @@ public class PlayerInput : MonoBehaviour
 
     private Vector2 GetSwipeDirection(Vector2 delta)
     {
+        
         Vector2 swipe = Vector2.zero;
+        
         if(Mathf.Abs(delta.x) >= Mathf.Abs(delta.y))
         {
             swipe = delta.x < 0 ? Vector2.left : Vector2.right;
@@ -88,7 +95,9 @@ public class PlayerInput : MonoBehaviour
         {
             swipe = delta.y < 0 ? Vector2.down : Vector2.up;
         }
+        
         return swipe;
+        
     }
 
 }

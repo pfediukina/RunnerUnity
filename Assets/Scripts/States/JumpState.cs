@@ -9,13 +9,13 @@ public class JumpState : IState<Player>
 
     public void Enter(Player owner)
     {
-        owner.OnPlayerSwipe += ChangeStateWithSwipe;
+        owner.OnPlayerMove += ChangeStateWithSwipe;
         Jump(owner);
     }
 
     public void Exit(Player owner)
     {
-        owner.OnPlayerSwipe -= ChangeStateWithSwipe;
+        owner.OnPlayerMove -= ChangeStateWithSwipe;
     }
 
     public void Update(Player owner)
@@ -30,12 +30,6 @@ public class JumpState : IState<Player>
 
     private void Jump(Player owner)
     {
-        if(owner.StateMachine.PreviousState is StepState)
-        {
-            owner.PlayerAnimator.PlayStateAnimation(_animationLoopID);
-            return;
-        } 
-
         var rb = owner.RigidBody;
         if(rb != null)
         {
@@ -49,11 +43,5 @@ public class JumpState : IState<Player>
         if(swipeDirection == Vector2.down)
             owner.StateMachine.SetState<RollState>();
         
-        else if(swipeDirection != Vector2.up) 
-        {
-            owner.StateMachine.GetState<StepState>().SetDirection(swipeDirection);
-            owner.StateMachine.SetState<StepState>();
-        }
     }
 }
-

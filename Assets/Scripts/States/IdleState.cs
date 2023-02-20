@@ -7,13 +7,13 @@ public class IdleState : IState<Player>
 
     public void Enter(Player owner)
     {
-        owner.OnPlayerSwipe += ChangeStateWithSwipe;
+        owner.OnPlayerMove += ChangeStateWithSwipe;
         Idle(owner);
     }
 
     public void Exit(Player owner)
     {
-        owner.OnPlayerSwipe -= ChangeStateWithSwipe;
+        owner.OnPlayerMove -= ChangeStateWithSwipe;
     }
 
     public void Update(Player owner)
@@ -33,12 +33,6 @@ public class IdleState : IState<Player>
             owner.StateMachine.SetState<JumpState>();
         else if(swipeDirection == Vector2.down)
             owner.StateMachine.SetState<RollState>();
-        else
-        {
-            owner.StateMachine.GetState<StepState>().
-                    SetDirection(swipeDirection);
-            owner.StateMachine.SetState<StepState>();
-        }
     }
 }
 

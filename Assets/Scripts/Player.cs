@@ -9,13 +9,14 @@ public class Player : MonoBehaviour
     public PlayerSettings PlayerSettings { get => _settings; }
     public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, PlayerSettings.GroundLayer);
 
-    public Action<Vector2, Player> OnPlayerSwipe;
+    public Action<Vector2, Player> OnPlayerMove;
     
     
     [SerializeField] private PlayerSettings _settings;
 
     private StateMachine _stateMachine;
     private PlayerAnimations _animator;
+    private PlayerLine _line;
     private Rigidbody _rb;
 
     [SerializeField] private Transform _groundChecker;
@@ -27,12 +28,12 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInput.OnSwipe += OnPlayerSwiped;
+        PlayerInput.OnMove += OnMoved;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnSwipe -= OnPlayerSwiped;
+        PlayerInput.OnMove -= OnMoved;
     }
 
     private void Update()
@@ -50,11 +51,13 @@ public class Player : MonoBehaviour
         if(_stateMachine == null)
             _stateMachine = new StateMachine(this);
         
+        _line = new PlayerLine(this);
+
         _rb = GetComponent<Rigidbody>();
     }
 
-    private void OnPlayerSwiped(Vector2 direction)
+    private void OnMoved(Vector2 direction)
     {
-        OnPlayerSwipe?.Invoke(direction, this);
+        OnPlayerMove?.Invoke(direction, this);
     }
 }

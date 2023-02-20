@@ -32,12 +32,18 @@ public class StateMachine
 
     public void SetState<T>() where T : IState<Player>
     {
-        SetState(GetState<T>());
+        var newState = GetState<T>();
+        if(_currentState != null)
+            _currentState.Exit(_player);
+
+        _previousState = _currentState;
+        _currentState = newState;
+        newState.Enter(_player);
     }
 
     public T GetState<T>() where T : IState<Player>
     {
-        var type = typeof(T); //NEED TEST
+        var type = typeof(T);
         return (T)_statesMap[type];
     }
 
@@ -48,22 +54,10 @@ public class StateMachine
         _statesMap[typeof(IdleState)] = new IdleState();
         _statesMap[typeof(JumpState)] = new JumpState();
         _statesMap[typeof(RollState)] = new RollState();
-        _statesMap[typeof(StepState)] = new StepState();
     }
 
     private void SetBehaviourByDefault()
     {
-        var defaultState = GetState<IdleState>();
-        SetState(defaultState);
-    }
-
-    private void SetState(IState<Player> newState)
-    {
-        if(_currentState != null)
-            _currentState.Exit(_player);
-
-        _previousState = _currentState;
-        _currentState = newState;
-        newState.Enter(_player);
+        SetState<IdleState>();
     }
 }
