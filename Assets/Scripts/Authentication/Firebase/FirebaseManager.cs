@@ -27,8 +27,8 @@ public class FirebaseManager : MonoBehaviour
         Database = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
-     private void CheckUser()
-     {
+    private void CheckUser()
+    {
             if(Auth.CurrentUser != null)
                 AuthManager.GoToMainMenu();
     }

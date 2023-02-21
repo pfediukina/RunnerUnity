@@ -4,8 +4,10 @@ using UnityEngine.Pool;
 
 public class ChunkFactory : BaseFactory<Chunk>
 {
+    [SerializeField] private int _spawnObstaclesFrom = 2;
     private Transform lastChunk;
     private GameObject _parent;
+    private int _count = 0;
 
     private void Awake()
     {
@@ -33,11 +35,9 @@ public class ChunkFactory : BaseFactory<Chunk>
     private Chunk SpawnChunk(Vector3 pos)
     {
         Chunk chunk = factoryObjects.Get();
-        if(lastChunk != null) //if not first
-        {   
-            chunk.SetObstacles();
-        }
         lastChunk = chunk.transform;
+        if(_count <= _spawnObstaclesFrom) _count++;
+        if(_count > _spawnObstaclesFrom) chunk.SetObstacles();
         
         chunk.OnChunkBehindPlayer -= OnChunkBehindPlayer;
         chunk.OnChunkBehindPlayer += OnChunkBehindPlayer;

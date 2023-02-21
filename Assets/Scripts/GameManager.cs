@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     public static Action OnGameSpeedChanged;
 
-    public static float Speed { get => _instance._speed; }
+    public static float Speed => _instance._speed; 
 
     private float _speed;
     private Coroutine _speedIncrease;
@@ -28,6 +29,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _speedIncrease = StartCoroutine(IncreaseSpeed());
+    }
+
+    public static void GoToMainMenu()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public static void SetGameSpeed(float speed)

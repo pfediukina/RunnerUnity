@@ -29,7 +29,7 @@ public class StateMachine
     private void Initialize()
     {
         InitStates();
-        SetBehaviourByDefault();
+        SetStateByDefault();
     }
 
     public void SetState<T>() where T : IState<Player>
@@ -60,7 +60,7 @@ public class StateMachine
         _statesMap[typeof(DeathState)] = new DeathState();
     }
 
-    private void SetBehaviourByDefault()
+    private void SetStateByDefault()
     {
         SetState<IdleState>();
     }

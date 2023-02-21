@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 61bb63199c31d3f4da4f9ff541ede6c3, type: 2}
   _collider: {fileID: 4649071220996994541}
+  _playerUI: {fileID: 0}
   _groundChecker: {fileID: 3852215075750139195}
 --- !u!1 &3559230453515913009
 GameObject:
@@ -243,6 +244,19 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 729b17e9f650f5140aaf951aac6686bd, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4681faa1ef064654480274f114cf8589, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
+        'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
+        'mixamorig:RightArm'\n\tand more ...\n\tFrom animation clip 'PlayerRun'\n\tFrom
+        animation clip 'JumpEnd'\n\tFrom animation clip 'JumpLoop'\n\tFrom animation
+        clip 'JumpStart'\n\tFrom animation clip 'PlayerRoll'\n\tFrom animation clip
+        'Getting Smashed'"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4681faa1ef064654480274f114cf8589, type: 3}
 --- !u!4 &8269411591919319348 stripped
@@ -250,3 +264,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4681faa1ef064654480274f114cf8589, type: 3}
   m_PrefabInstance: {fileID: 8451114080347119327}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8757542680212890510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4681faa1ef064654480274f114cf8589, type: 3}
+  m_PrefabInstance: {fileID: 8451114080347119327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7664025773658944494
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757542680212890510}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 299586f9c2d95d943bbce8a8b2b71abc, type: 3}
+  m_Controller: {fileID: 9100000, guid: 729b17e9f650f5140aaf951aac6686bd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
