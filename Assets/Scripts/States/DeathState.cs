@@ -29,7 +29,6 @@ public class DeathState : IState<Player>
         GameManager.SetGameSpeed(0);
         owner.transform.eulerAngles += Vector3.down * 90;
         owner.transform.position += Vector3.back * 0.5f;
+        owner.PlayerUI.ShowDeathScreen(0);
     }
-
-
 }

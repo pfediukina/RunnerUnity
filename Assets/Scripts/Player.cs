@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody RigidBody { get => _rb; }
-    public BoxCollider Collider { get => _collider; }
-    public StateMachine StateMachine { get => _stateMachine; }
-    public PlayerAnimations PlayerAnimator { get => _animator; }
-    public PlayerSettings PlayerSettings { get => _settings; }
+    public Rigidbody RigidBody => _rb; 
+    public BoxCollider Collider  => _collider; 
+    public StateMachine StateMachine  => _stateMachine; 
+    public PlayerAnimations PlayerAnimator => _animator; 
+    public PlayerSettings PlayerSettings => _settings;
+    public PlayerUI PlayerUI => _playerUI;
     public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, PlayerSettings.GroundLayer);
 
     public Action<Vector2, Player> OnPlayerInput;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] private PlayerSettings _settings;
     [SerializeField] private BoxCollider _collider;
+    [SerializeField] private PlayerUI _playerUI;
 
     private StateMachine _stateMachine;
     private PlayerAnimations _animator;
