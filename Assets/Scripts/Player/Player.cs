@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public Rigidbody RigidBody => _rb; 
     public BoxCollider Collider  => _collider; 
     public StateMachine StateMachine  => _stateMachine; 
-    public PlayerAnimations PlayerAnimator => _animator; 
+    public PlayerAnimations PlayerAnimator => _animator;
     public PlayerSettings PlayerSettings => _settings;
     public PlayerUI PlayerUI => _playerUI;
     public bool IsGrounded => Physics.CheckSphere(_groundChecker.position, 0.1f, PlayerSettings.GroundLayer);
@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Action<Player> OnPlayerUpdate;    
     
     [SerializeField] private PlayerSettings _settings;
+
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private PlayerUI _playerUI;
 
@@ -64,7 +65,6 @@ public class Player : MonoBehaviour
             _stateMachine = new StateMachine(this);
         
         _line = new PlayerLine(this);
-
         _rb = GetComponent<Rigidbody>();
     }
 

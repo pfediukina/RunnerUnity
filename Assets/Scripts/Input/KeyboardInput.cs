@@ -22,6 +22,8 @@ public class KeyboardInput : IPlayerInput
         {
             d = direction.y < 0 ? Vector2.down : Vector2.up;
         }
+        if(direction == Vector2.zero) return;
+        
         OnDirectionInput?.Invoke(d);
     }
 }

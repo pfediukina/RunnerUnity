@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
     public static Action OnGameSpeedChanged;
 
     public static float Speed => _instance._speed; 
+    public static float Score => _instance._score; 
 
     private float _speed;
+    private float _score = 0;
     private Coroutine _speedIncrease;
 
     [SerializeField] private GameSettings _gameSettings;
@@ -29,6 +31,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _speedIncrease = StartCoroutine(IncreaseSpeed());
+    }
+
+    private void Update()
+    {
+        _score += Time.deltaTime * Speed;
     }
 
     public static void GoToMainMenu()
@@ -50,6 +57,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         
+        _score = 0;
         _speed = _gameSettings.StartSpeed;
     }
 

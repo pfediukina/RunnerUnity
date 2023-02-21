@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Firebase;
 using Firebase.Auth;
@@ -14,12 +16,6 @@ public class FirebaseManager : MonoBehaviour
         InitializeFirebase();
     }
 
-    private void Start()
-    {
-       CheckUser();
-    }
-
-
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
@@ -27,9 +23,25 @@ public class FirebaseManager : MonoBehaviour
         Database = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
-    private void CheckUser()
+    public static IEnumerator SaveUser()
     {
-        if(Auth.CurrentUser != null)
-            AuthManager.GoToMainMenu();
+        if(PlayerData.IsNull) yield break;
+
+        var task1 = FirebaseDatabase.DefaultInstance.RootReference.Child(Auth.CurrentUser.UserId).Child("Name").SetValueAsync(PlayerData.Name);
+        var task2 = FirebaseDatabase.DefaultInstance.RootReference.Child(Auth.CurrentUser.UserId).Child("Record").SetValueAsync(PlayerData.Record);
+        yield return new WaitUntil(predicate: () => task1.IsCompleted && task2.IsCompleted);
+    }
+
+    public static void GetUserInfo()
+    {
+        FirebaseDatabase.DefaultInstance.RootReference.GetValueAsync().ContinueWith( task =>
+        {
+            if(task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                PlayerData.Name = (string)snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("Name").Value;
+                PlayerData.Record = (int)snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("Record").Value;
+            }
+        });
     }
 }

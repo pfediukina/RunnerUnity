@@ -9,8 +9,8 @@ using Firebase.Extensions;
 public class LoginFirebase : MonoBehaviour
 {
     [SerializeField] private AuthenticationUI _authUI;
-    private FirebaseUser _user;
 
+    private FirebaseUser _user;
 
     private void OnEnable()
     {
@@ -25,8 +25,6 @@ public class LoginFirebase : MonoBehaviour
 
     public void LoginUser(string email, string password)
     {
-        
-        //Debug.Log("Login");
         StartCoroutine(LoginProcess(email, password));
     }
 
@@ -63,27 +61,8 @@ public class LoginFirebase : MonoBehaviour
         }
         else
         {
+            FirebaseManager.GetUserInfo();
             AuthManager.GoToMainMenu();
         }
-        // else
-        // {
-        //     _user = RegisterTask.Result;
-        //     if(_user  != null)
-        //     {
-        //         UserProfile profile = new UserProfile { DisplayName = name };
-        //         var ProfileTask = _user.UpdateUserProfileAsync(profile);
-        //         yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
-        //         if(ProfileTask.Exception != null)
-        //         {
-        //             FirebaseException fbEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
-        //             AuthError errorCode = (AuthError)fbEx.ErrorCode;
-        //             Debug.LogWarning(ProfileTask.Exception.Message + $" Code: {errorCode}");
-        //         }
-        //         else
-        //         {
-        //             Debug.Log("Registered");
-        //         }
-        //     }
-        // }
     }
 }

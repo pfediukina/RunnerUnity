@@ -74,16 +74,12 @@ public class RegistrationFirebase : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(AddUserName(name));
+                    PlayerData.Name = name;
+                    PlayerData.Record = 0;
+                    StartCoroutine(FirebaseManager.SaveUser());
                     AuthManager.GoToMainMenu();
                 }
             }
         }
-    }
-
-    private IEnumerator AddUserName(string name)
-    {
-        var loginTask = FirebaseManager.Database.Child(_user.UserId).Child("Name").SetValueAsync(name);
-        yield return new WaitUntil(predicate: () => loginTask.IsCompleted);
     }
 }
