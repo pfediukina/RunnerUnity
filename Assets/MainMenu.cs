@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Firebase.Auth;
 
 public class MainMenu : MonoBehaviour
 {
-    public void ChangeScene()
+    public void ChangeScene(int sceneID)
     {   
-        SceneManager.LoadScene(2);
+        FirebaseAuth.DefaultInstance.SignOut();
+        SceneManager.LoadScene(sceneID);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

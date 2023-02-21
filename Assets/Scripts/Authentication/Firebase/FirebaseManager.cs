@@ -29,7 +29,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void CheckUser()
     {
-            if(Auth.CurrentUser != null)
-                AuthManager.GoToMainMenu();
+        if(Auth.CurrentUser != null)
+            AuthManager.GoToMainMenu();
     }
 }
