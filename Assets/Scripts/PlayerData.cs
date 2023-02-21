@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     public static bool IsNull => _data == null ? true : false;
+    public static PlayerData Data => _data;
     public static string Name { get => _data._name; set => _data._name = value; }
     public static int Record { get => _data._record; set => _data._record = value; }
 
@@ -25,4 +26,15 @@ public class PlayerData : MonoBehaviour
         _data._name = name;
         _data._record = record;
     }
+
+    public static void RestoreToDefault()
+    {
+        _data._name = "Default";
+        _data._record = 0;
+    }
+
+    public static void GetData(string jsonString)
+    {
+        Debug.Log(jsonString);
+    } 
 }

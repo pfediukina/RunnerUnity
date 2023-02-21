@@ -1,46 +1,42 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System;
 using UnityEngine;
-using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FirebaseManager : MonoBehaviour
 {
-    public static FirebaseAuth Auth;
-    public static DatabaseReference Database;
 
-    private void Awake()
+
+    public static void SaveUserInfo(Action OnComplete)
     {
-        InitializeFirebase();
+        if(PlayerData.IsNull) return;
+        FirebaseDatabase.DefaultInstance.RootReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId)
+                                            .SetRawJsonValueAsync(JsonUtility.ToJson(PlayerData.Data)).ContinueWith(task =>
+                                            {
+                                                if(task.IsCompleted) OnComplete?.Invoke();
+                                            });
+
+        // var task1 = FirebaseDatabase.DefaultInstance.RootReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).
+        //                                 Child("Name").SetValueAsync(PlayerData.Name);
+        // var task2 = FirebaseDatabase.DefaultInstance.RootReference.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).
+        //                                 Child("Record").SetValueAsync(PlayerData.Record);
     }
 
-    private void InitializeFirebase()
-    {
-        Debug.Log("Setting up Firebase Auth");
-        Auth = FirebaseAuth.DefaultInstance;
-        Database = FirebaseDatabase.DefaultInstance.RootReference;
-    }
-
-    public static IEnumerator SaveUser()
-    {
-        if(PlayerData.IsNull) yield break;
-
-        var task1 = FirebaseDatabase.DefaultInstance.RootReference.Child(Auth.CurrentUser.UserId).Child("Name").SetValueAsync(PlayerData.Name);
-        var task2 = FirebaseDatabase.DefaultInstance.RootReference.Child(Auth.CurrentUser.UserId).Child("Record").SetValueAsync(PlayerData.Record);
-        yield return new WaitUntil(predicate: () => task1.IsCompleted && task2.IsCompleted);
-    }
-
-    public static void GetUserInfo()
+    public static void GetUserInfo(Action OnComplete)
     {
         FirebaseDatabase.DefaultInstance.RootReference.GetValueAsync().ContinueWith( task =>
         {
             if(task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                PlayerData.Name = (string)snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("Name").Value;
-                PlayerData.Record = (int)snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("Record").Value;
+                PlayerData.GetData(snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).GetRawJsonValue());
+                
+
+                // PlayerData.Name = (string)snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("Name").Value;
+                // PlayerData.Record = (int)snapshot.Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).Child("Record").Value;
+                OnComplete?.Invoke();
             }
         });
     }

@@ -16,8 +16,6 @@ public class AuthenticationUI : MonoBehaviour
 
     void Awake()
     {
-        InitializeRegistration();
-        InitializeLogin();
         ShowCurrentWindow();
     }
 
@@ -45,17 +43,6 @@ public class AuthenticationUI : MonoBehaviour
         HideErrorText();
         _isLogin = !_isLogin;
         ShowCurrentWindow();
-    }
-
-
-    private void InitializeRegistration()
-    {
-        _registerUI.Authorization = this;
-    }
-
-    private void InitializeLogin()
-    {
-        _loginUI.Authorization = this;
     }
 
     private void ShowLogin(bool show)

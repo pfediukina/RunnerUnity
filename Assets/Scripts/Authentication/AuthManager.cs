@@ -14,20 +14,21 @@ public class AuthManager : MonoBehaviour
             _instance = this;
     }
 
+    private void OnEnable()
+    {
+        Auth.OnLoginSucess += GoToMainMenu;
+    }
+
+    private void OnDisable()
+    {
+        Auth.OnLoginSucess -= GoToMainMenu;
+    }
+
     public static void GoToMainMenu()
     {
         _instance.StartCoroutine(_instance.GoToMenu());
     }
-
-    void Start()
-    {
-        if(FirebaseManager.Auth.CurrentUser != null)
-        {
-            FirebaseManager.GetUserInfo();
-            AuthManager.GoToMainMenu();
-        }
-    }
-
+    
     private IEnumerator GoToMenu()
     {
         yield return new WaitForSeconds(0.1f);
