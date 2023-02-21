@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class IdleState : IState<Player>
 {
-    private int _animationName = Animator.StringToHash("Idle");
+    private int _animationNameID = Animator.StringToHash("Idle");
     private float _colliderPosY = 1.3f;
 
     public void Enter(Player owner)
@@ -29,7 +29,7 @@ public class IdleState : IState<Player>
         owner.Collider.center = colliderPos;
 
         if(owner.PlayerAnimator != null)
-            owner.PlayerAnimator.PlayStateAnimation(_animationName);
+            owner.PlayerAnimator.PlayStateAnimation(_animationNameID);
     }
 
     private void ChangeStateWithSwipe(Vector2 swipeDirection, Player owner)

@@ -19,6 +19,7 @@ public class PlayerLine
     private void GetPlayerInput(Vector2 direction, Player player)
     {
         if(direction == Vector2.up || direction == Vector2.down) return;
+        if(player.StateMachine.CurrentState is DeathState) return;
         
         _isRight = direction == Vector2.right ? true : false;
         _prevLine = _line;

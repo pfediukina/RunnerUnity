@@ -57,6 +57,7 @@ public class StateMachine
         _statesMap[typeof(IdleState)] = new IdleState();
         _statesMap[typeof(JumpState)] = new JumpState();
         _statesMap[typeof(RollState)] = new RollState();
+        _statesMap[typeof(DeathState)] = new DeathState();
     }
 
     private void SetBehaviourByDefault()

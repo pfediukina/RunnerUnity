@@ -14,6 +14,7 @@ public class ObstacleFactory : BaseFactory<Obstacle>
         
         _parent = new GameObject("Obs");
         _parent.transform.parent = transform;
+
         factoryObjects = InitPool(GetAmountOfObsPerLine() * GameManager.GameSettings.NumberOfLines, _parent.transform);
     }
 
@@ -34,20 +35,9 @@ public class ObstacleFactory : BaseFactory<Obstacle>
         for(int i = 0; i < _lineStrings[line].Length; i++)
         {
             if(_lineStrings[line][i] == '0') continue;
-            else 
-            {
-                Vector3 pos = transform.position + Vector3.forward * i * GameManager.GameSettings.Distance;
-                pos += Vector3.right * lineXOffset;
-
-                if(_lineStrings[line][i] == '1')
-                {
-                    _objects.Add(SpawnObstacle(pos, true));
-                }
-                else
-                {
-                    _objects.Add(SpawnObstacle(pos, false));
-                }
-            }
+            Vector3 pos = transform.position + Vector3.forward * i * GameManager.GameSettings.Distance;
+            pos += Vector3.right * lineXOffset;
+            _objects.Add(SpawnObstacle(pos, _lineStrings[line][i] == '1' ? true : false));
         }
     }
     
@@ -55,12 +45,7 @@ public class ObstacleFactory : BaseFactory<Obstacle>
     {
         Obstacle obs = factoryObjects.Get();
         obs.transform.position = pos;
-
-        if(isShort)
-            obs.SetShortObstacle();
-        else
-            obs.SetLongObstacle();
-
+        obs.SetObstacle(isShort);
         return obs;
     }
 

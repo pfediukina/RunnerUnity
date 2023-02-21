@@ -10,21 +10,12 @@ public class Obstacle : MonoBehaviour
     [SerializeField] public Collider ShortCollider;
     [SerializeField] public Collider LongCollider;
 
-    public void SetLongObstacle()
+    public void SetObstacle(bool isShort)
     {
-        Long.SetActive(true);
-        Short.SetActive(false);
+        Short.SetActive(isShort);
+        Long.SetActive(!isShort);
         
-        ShortCollider.enabled = false;
-        LongCollider.enabled = true;
-    }
-
-    public void SetShortObstacle()
-    {
-        Long.SetActive(false);
-        Short.SetActive(true);
-
-        ShortCollider.enabled = true;
-        LongCollider.enabled = false;
+        ShortCollider.enabled = isShort;
+        LongCollider.enabled = !isShort;
     }
 }

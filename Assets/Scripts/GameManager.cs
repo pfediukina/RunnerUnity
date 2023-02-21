@@ -11,11 +11,10 @@ public class GameManager : MonoBehaviour
 
     public static Action OnGameSpeedChanged;
 
-
-    //wip
     public static float Speed { get => _instance._speed; }
 
     private float _speed;
+    private Coroutine _speedIncrease;
 
     [SerializeField] private GameSettings _gameSettings;
 
@@ -28,9 +27,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(IncreaseSpeed());
+        _speedIncrease = StartCoroutine(IncreaseSpeed());
     }
 
+    public static void SetGameSpeed(float speed)
+    {
+        _instance.StopCoroutine(_instance._speedIncrease);
+        _instance._speed = speed;
+    }
 
     private void Initialize()
     {

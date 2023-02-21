@@ -48,7 +48,9 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Obs");
+        var death = StateMachine.GetState<DeathState>();
+        death.SetDeathPos(other.transform.position);
+        StateMachine.SetState<DeathState>();
     }
 
     private void InitializeComponents()
