@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd242a3c186634547b20d3c38bf90a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tapText: {fileID: 1603165351}
 --- !u!1 &870225362
 GameObject:
   m_ObjectHideFlags: 0
