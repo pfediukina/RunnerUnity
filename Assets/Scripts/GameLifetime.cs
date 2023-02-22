@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameLifetime : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameLifetime : MonoBehaviour
     {
         if(_instance == null)
             _instance = this;
+
         Initialize();
     }
 
@@ -30,6 +32,11 @@ public class GameLifetime : MonoBehaviour
     private void Start()
     {
         _speedIncrease = StartCoroutine(IncreaseSpeed());
+    }
+
+    public static void ChangeScene(int id)
+    {
+        SceneManager.LoadScene(id);
     }
 
     public static void SetGameSpeed(float speed)
@@ -52,6 +59,10 @@ public class GameLifetime : MonoBehaviour
     private void Initialize()
     {
         _score = 0;
+        if(PlayerData.Score != 0)
+        {
+            _score = PlayerData.Score;
+        }
         _speed = GameData.GameSettings.StartSpeed;
     }
 }

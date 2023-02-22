@@ -29,6 +29,7 @@ public class Auth : MonoBehaviour
     {
         if(FirebaseAuth.DefaultInstance.CurrentUser != null)
         {
+            Debug.Log("Autologin");
             PlayerDatabase.GetPlayerData(OnLoginSucess);
         }
     }

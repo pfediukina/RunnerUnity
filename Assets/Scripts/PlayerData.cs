@@ -6,10 +6,12 @@ public class PlayerData : MonoBehaviour
     public static PlayerData Data => _data;
     public static string Name { get => _data._name; set => _data._name = value; }
     public static int Record { get => _data._record; set => _data._record = value; }
+    public static int Score { get => _data._score; set => _data._score = value; }
 
     [SerializeField] private static PlayerData _data;
     [SerializeField] private string _name;
     [SerializeField] private int _record;
+    [SerializeField] private int _score;
 
     void Awake()
     {
@@ -34,7 +36,6 @@ public class PlayerData : MonoBehaviour
     public static void SetData(string jsonString)
     {
         JsonData d = JsonUtility.FromJson<JsonData>(jsonString);
-        Debug.Log(jsonString);
         _data._name = d.Name;
         _data._record = d.Record;
     } 

@@ -19,4 +19,15 @@ public static class PlayerDatabase
     {
         FirebaseManager.GetUserInfo(onComplete);
     }
+
+    public static void SavePlayerRecord(int record)
+    {
+        JsonData d = new JsonData();
+        PlayerData.Record = record;
+        d.Name = PlayerData.Name;
+        d.Record  = PlayerData.Record;
+        string json = JsonUtility.ToJson(d);
+
+        PlayerData.SetData(json);
+    }
 }

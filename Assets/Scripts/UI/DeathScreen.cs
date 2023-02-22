@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathScreen : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _gameOver;
     [SerializeField] private DoTweenText _gameOverText;
+    [SerializeField] private TextMeshProUGUI _score;
     [SerializeField] private Button _mainMenu;
 
     private float _interactableTimer = 1;
@@ -16,6 +17,7 @@ public class DeathScreen : MonoBehaviour
     public void Awake()
     {
         _gameOverText.OnCompleteTask += OnAnimatedTextComplited;
+        _score.text = "";
     }
     public void Show()
     {
@@ -23,9 +25,30 @@ public class DeathScreen : MonoBehaviour
         _gameOverText.AnimateText();
     }
 
+    public void OnPlayerClickedButton()
+    {
+        if(GameLifetime.Score > PlayerData.Record)
+        {
+            PlayerDatabase.SavePlayerRecord((int)GameLifetime.Score);
+        }
+
+        GameLifetime.ChangeScene(1);
+    }
+
+    private void SetPlayerScore()
+    {
+        _score.text = "SCORE: " + ((int)GameLifetime.Score).ToString();
+        if(GameLifetime.Score > PlayerData.Record)
+        {
+            _score.text += "\nNEW RECORD!";
+            PlayerDatabase.SavePlayerRecord((int)GameLifetime.Score);
+        }
+    }
+
     private void OnAnimatedTextComplited()
     {
         _mainMenu.gameObject.SetActive(true);
+        SetPlayerScore();
         StartCoroutine(SetInteractableDeathButton());
     }
 
@@ -34,9 +57,4 @@ public class DeathScreen : MonoBehaviour
         yield return new WaitForSeconds(_interactableTimer);
         _gameOver.interactable = true;
     } 
-
-    private void OnPlayerClickedButton()
-    {
-
-    }
 }
