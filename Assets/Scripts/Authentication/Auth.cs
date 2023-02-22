@@ -29,6 +29,7 @@ public class Auth : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("Auth") == 1)
         {
+            LoadingScreen.ShowWindow(true);
             SignIn(PlayerPrefs.GetString("Login"), PlayerPrefs.GetString("Password"));
         }
     }
@@ -36,6 +37,7 @@ public class Auth : MonoBehaviour
     //register
     public void SignUp(string email, string pass, string name)
     {
+        LoadingScreen.ShowWindow(true);
         FirebaseAuth.DefaultInstance.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread( task =>
         {
             if(task.IsCompleted)
@@ -50,12 +52,14 @@ public class Auth : MonoBehaviour
                 AuthError errorCode = (AuthError)fbEx.ErrorCode;
                 _authUI.ShowErrorMessage(AuthErrors[errorCode]);
             }
+            LoadingScreen.ShowWindow(false);
         });
     }
 
     //login
     public void SignIn(string email, string pass)
     {
+        LoadingScreen.ShowWindow(true);
         FirebaseAuth.DefaultInstance.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread( task =>
         {
             if(task.IsCompleted)
@@ -72,6 +76,7 @@ public class Auth : MonoBehaviour
                 AuthError errorCode = (AuthError)fbEx.ErrorCode;
                 _authUI.ShowErrorMessage(AuthErrors[errorCode]);
             }
+            LoadingScreen.ShowWindow(false);
         });
     }
 
