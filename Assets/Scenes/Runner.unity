@@ -227,7 +227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &84857732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,6 +314,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e63157b2eea25774280ded2fd1103063, type: 3}
+--- !u!1 &166456180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 166456182}
+  - component: {fileID: 166456181}
+  m_Layer: 5
+  m_Name: Ads
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &166456181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166456180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4343818baf54245bfb5980a212f310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &166456182
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166456180}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507499963}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &260544483
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,6 +737,7 @@ RectTransform:
   - {fileID: 1252454285}
   - {fileID: 1755978223}
   - {fileID: 1419061466}
+  - {fileID: 166456182}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -710,6 +760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 541665392}
   _deathScreen: {fileID: 1252454289}
+  _adsScreen: {fileID: 166456181}
   _scoreText: {fileID: 1419061464}
   _name: {fileID: 1755978221}
 --- !u!4 &541665391 stripped
@@ -1595,7 +1646,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252454284}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 1
@@ -1613,6 +1664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameOver: {fileID: 1252454288}
   _gameOverText: {fileID: 1102179030}
+  _score: {fileID: 378380831}
   _mainMenu: {fileID: 581877145}
 --- !u!114 &1252454290
 MonoBehaviour:
@@ -1841,7 +1893,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1560022666}
   - component: {fileID: 1560022665}
-  - component: {fileID: 1560022667}
   - component: {fileID: 1560022668}
   m_Layer: 0
   m_Name: MANAGER
@@ -1878,18 +1929,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1560022667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560022664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5548fcbccd69104daaf1a8076721916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1560022668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1902,6 +1941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa42a1626ec7cca4cafe8fcf077028dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: a6e53480e0c84754a9c35327a900ef02, type: 2}
 --- !u!1 &1597731416
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,9 +2320,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1252454289}
-        m_TargetAssemblyTypeName: DeathScreen, Assembly-CSharp
-        m_MethodName: OnPlayerClickedButton
+      - m_Target: {fileID: 166456181}
+        m_TargetAssemblyTypeName: Advertising, Assembly-CSharp
+        m_MethodName: LoadRewardedAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

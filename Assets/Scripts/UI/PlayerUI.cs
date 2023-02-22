@@ -8,6 +8,8 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Player _player;
 
     [SerializeField] private DeathScreen _deathScreen;
+    [SerializeField] private Advertising _adsScreen;
+
     [SerializeField] private TMPro.TextMeshProUGUI _scoreText;
     [SerializeField] private TMPro.TextMeshProUGUI _name;
 
@@ -21,9 +23,10 @@ public class PlayerUI : MonoBehaviour
         UpdateScore();
     }
 
-    public void ShowDeathScreen()
+    public void ShowDeathScreen(bool show)
     {
-        _deathScreen.Show();
+        if(show) _deathScreen.Show();
+        else _deathScreen.Hide();
     }
 
     public void UpdateScore()

@@ -13,7 +13,6 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         _tapText.transform.DOScale(Vector3.one * 1.2f, 0.5f).SetLoops(-1, LoopType.Yoyo);
-        PlayerData.Score = 0;
     }
 
     void OnEnable()

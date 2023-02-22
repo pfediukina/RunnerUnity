@@ -26,9 +26,9 @@ public class DeathState : IState<Player>
         if(owner.PlayerAnimator != null)
             owner.PlayerAnimator.PlayStateAnimation(_animationNameID);
 
-        GameLifetime.SetGameSpeed(0);
+        GameLifetime.PauseGame();
         owner.transform.eulerAngles += Vector3.down * 90;
         owner.transform.position += Vector3.back * 0.5f;
-        owner.PlayerUI.ShowDeathScreen();
+        owner.PlayerUI.ShowDeathScreen(true);
     }
 }

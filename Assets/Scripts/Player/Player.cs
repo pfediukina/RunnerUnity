@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private PlayerAnimations _animator;
     private PlayerLine _line;
     private Rigidbody _rb;
+    private Collider _obstacle;
 
     [SerializeField] private Transform _groundChecker;
 
@@ -34,11 +35,13 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         PlayerInput.OnInput += Input_OnPlayerInput;
+        Advertising.OnPlayerSawAd += OnPlayerSawAd;
     }
 
     private void OnDisable()
     {
         PlayerInput.OnInput -= Input_OnPlayerInput;
+        Advertising.OnPlayerSawAd -= OnPlayerSawAd;
     }
 
     private void Update()
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
         var death = StateMachine.GetState<DeathState>();
         death.SetDeathPos(other.transform.position);
         StateMachine.SetState<DeathState>();
+        _obstacle = other;
     }
 
     private void InitializeComponents()
@@ -71,5 +75,15 @@ public class Player : MonoBehaviour
     private void Input_OnPlayerInput(Vector2 direction)
     {
         OnPlayerInput?.Invoke(direction, this);
+    }
+
+    private void OnPlayerSawAd()
+    {
+        _obstacle.gameObject.SetActive(false);
+        StateMachine.SetState<IdleState>();
+        _playerUI.ShowDeathScreen(false);
+        transform.rotation = Quaternion.identity;
+        _collider.enabled = true;
+        GameLifetime.ResumeGame();
     }
 }

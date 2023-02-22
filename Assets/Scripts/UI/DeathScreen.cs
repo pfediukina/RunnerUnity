@@ -25,6 +25,13 @@ public class DeathScreen : MonoBehaviour
         _gameOverText.AnimateText();
     }
 
+    public void Hide()
+    {
+        _score.text = "";
+        _gameOver.alpha = 0;
+        _gameOver.interactable = false;
+    }
+
     public void OnPlayerClickedButton()
     {
         if(GameLifetime.Score > PlayerData.Record)
