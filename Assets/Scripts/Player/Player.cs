@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public Action<Player> OnPlayerUpdate;    
     
     [SerializeField] private PlayerSettings _settings;
-
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private PlayerUI _playerUI;
 

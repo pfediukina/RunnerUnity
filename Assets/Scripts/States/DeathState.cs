@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class DeathState : IState<Player>
 {
-    private int _animationNameID = Animator.StringToHash("Death");
+    private int _animationNameID = 0;
     private Vector3 _deathPos;
 
-    public void Enter(Player owner) {
+    public void Enter(Player owner) 
+    {
+        if(_animationNameID == 0)
+            _animationNameID = Animator.StringToHash(owner.PlayerSettings.AnimationNames.Death);
+            
         Death(owner);
         owner.Collider.enabled = false; 
     }
