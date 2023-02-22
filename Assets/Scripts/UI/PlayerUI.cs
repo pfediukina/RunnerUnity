@@ -9,7 +9,6 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Player _player;
 
     [SerializeField] private DeathScreen _deathScreen;
-    [SerializeField] private CanvasGroup _loadingScreen;
     [SerializeField] private Advertising _adsScreen;
 
     [SerializeField] private TMPro.TextMeshProUGUI _scoreText;
@@ -55,10 +54,7 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowLoadingScreen(bool show)
     {
-        ShowDeathScreen(false);
-        if(_loadingScreen == null) return;
-        _loadingScreen.alpha = show ? 1 : 0;
-        _loadingScreen.blocksRaycasts = show ? true : false;
+        LoadingScreen.ShowWindow(show);
     }
 
     public void ShowDeathScreen(bool show)
