@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "432056987147",
+    "firebase_url": "https://runnerunity-c978e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "runnerunity-c978e",
+    "storage_bucket": "runnerunity-c978e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432056987147:android:9460bdfc048e96e02a210e",
+        "android_client_info": {
+          "package_name": "com.test.RunnerUnity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432056987147-n0sdnb1llo9k37lsermffftb0ligqto9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtfQQ6DG0wjAL4yESdKnmN-0VN2QvVLYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432056987147-n0sdnb1llo9k37lsermffftb0ligqto9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
