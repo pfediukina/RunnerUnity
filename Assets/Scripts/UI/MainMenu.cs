@@ -20,10 +20,20 @@ public class MainMenu : MonoBehaviour
         _playerName.text = PlayerData.Name;
     }
 
-    public void ChangeScene(int sceneID)
+    public void LogOut()
     {   
+        Debug.Log(":c");
         FirebaseAuth.DefaultInstance.SignOut();
-        SceneManager.LoadScene(sceneID);
+        
+        PlayerPrefs.DeleteKey("Login");
+        PlayerPrefs.DeleteKey("Password");
+        PlayerPrefs.SetInt("Auth", 0);
+        SceneManager.LoadScene(0);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void ExitGame()

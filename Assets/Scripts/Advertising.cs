@@ -9,8 +9,15 @@ public class Advertising : MonoBehaviour
     private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
     private RewardedAd _ad;
 
+    void Awake()
+    {
+        OnPlayerSawAd = null;
+    }
+
     public void LoadRewardedAd()
     {
+        if(GameData.IsWatchedAd) return;
+
         if(_ad != null)
         {
             _ad.Destroy();
@@ -29,16 +36,17 @@ public class Advertising : MonoBehaviour
                 else
                 {
                     _ad = ad;
+                    ShowRewardedAd();
                 }
             });
-        ShowRewardedAd();
-    }
+        }
 
     public void ShowRewardedAd()
     {
         if(_ad != null && _ad.CanShowAd())
         {
             _ad.Show(PlayerSawAd);
+            GameData.IsWatchedAd = true;
         }
     }
 

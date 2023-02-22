@@ -68,6 +68,7 @@ public class GameLifetime : MonoBehaviour
 
     private void Initialize()
     {
+        OnGameSpeedChanged = null;
         _score = 0;
         _speed = GameData.GameSettings.StartSpeed;
     }

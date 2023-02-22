@@ -17,6 +17,7 @@ public class AuthManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        Debug.Log("Hello 2");
         SceneManager.LoadScene(1);
     }
 }

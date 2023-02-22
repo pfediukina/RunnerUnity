@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform _groundChecker;
 
-    private void Awake()
+    private void Start()
     {
         InitializeComponents();
     }
@@ -80,10 +81,16 @@ public class Player : MonoBehaviour
     private void OnPlayerSawAd()
     {
         _obstacle.gameObject.SetActive(false);
-        StateMachine.SetState<IdleState>();
-        _playerUI.ShowDeathScreen(false);
-        transform.rotation = Quaternion.identity;
         _collider.enabled = true;
-        GameLifetime.ResumeGame();
+
+        StartCoroutine(SetPlayerIdleAfterPause());
+        //GameLifetime.ResumeGame();
+    }
+
+    private IEnumerator SetPlayerIdleAfterPause()
+    {
+        yield return new WaitForSeconds(3);
+        StateMachine.SetState<IdleState>();
+        transform.rotation = Quaternion.identity;
     }
 }

@@ -27,21 +27,21 @@ public class Auth : MonoBehaviour
 
     private void Start()
     {
-        if(FirebaseAuth.DefaultInstance.CurrentUser != null)
+        if(PlayerPrefs.GetInt("Auth") == 1)
         {
-            Debug.Log("Autologin");
-            PlayerDatabase.GetPlayerData(OnLoginSucess);
+            SignIn(PlayerPrefs.GetString("Login"), PlayerPrefs.GetString("Password"));
         }
     }
 
     //register
     public void SignUp(string email, string pass, string name)
     {
-        FirebaseAuth.DefaultInstance.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWith( task =>
+        FirebaseAuth.DefaultInstance.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread( task =>
         {
             if(task.IsCompleted)
             {
                 FirebaseUser user = task.Result;
+                SaveLogin(email, pass);
                 PlayerDatabase.SavePlayerData(name, 0, OnLoginSucess);
             }
             else
@@ -56,26 +56,29 @@ public class Auth : MonoBehaviour
     //login
     public void SignIn(string email, string pass)
     {
-        FirebaseAuth.DefaultInstance.SignInWithEmailAndPasswordAsync(email, pass).ContinueWith( task =>
+        FirebaseAuth.DefaultInstance.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread( task =>
         {
             if(task.IsCompleted)
             {
                 FirebaseUser user = task.Result;
                 UserProfile profile = new UserProfile();
                 user.UpdateUserProfileAsync(profile);
+                SaveLogin(email, pass);
                 PlayerDatabase.GetPlayerData(OnLoginSucess);
             }
             else
             {
                 FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
                 AuthError errorCode = (AuthError)fbEx.ErrorCode;
-                _authUI.ShowErrorMessage(AuthErrors[errorCode]);                Debug.LogError(task.Exception.Message);
+                _authUI.ShowErrorMessage(AuthErrors[errorCode]);
             }
         });
     }
 
-    // private void SuccessLogin()
-    // {
-    //     OnLoginSucess?.Invoke();
-    // }
+    private void SaveLogin(string email, string pass)
+    {
+        PlayerPrefs.SetString("Login", email);
+        PlayerPrefs.SetString("Password", pass);
+        PlayerPrefs.SetInt("Auth", 1);
+    }
 }

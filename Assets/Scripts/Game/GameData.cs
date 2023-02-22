@@ -12,11 +12,8 @@ public class GameData : MonoBehaviour
 
     public static Action OnGameSpeedChanged;
 
-    public static float Speed => _instance._speed; 
-    public static float Score => _instance._score; 
+    public static bool IsWatchedAd = false; 
 
-    private float _speed;
-    private float _score = 0;
     private Coroutine _speedIncrease;
 
     [SerializeField] private GameSettings _gameSettings;
@@ -30,6 +27,7 @@ public class GameData : MonoBehaviour
 
     private void Initialize()
     {
+        IsWatchedAd = false;
         if(_gameSettings == null)
         {
             Debug.LogError("GameSettings was not found");

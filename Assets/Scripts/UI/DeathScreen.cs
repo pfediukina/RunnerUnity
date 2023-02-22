@@ -10,7 +10,8 @@ public class DeathScreen : MonoBehaviour
     [SerializeField] private CanvasGroup _gameOver;
     [SerializeField] private DoTweenText _gameOverText;
     [SerializeField] private TextMeshProUGUI _score;
-    [SerializeField] private Button _mainMenu;
+    [SerializeField] private Button[] _buttons;
+    [SerializeField] private Button _death;
 
     private float _interactableTimer = 1;
 
@@ -32,13 +33,12 @@ public class DeathScreen : MonoBehaviour
         _gameOver.interactable = false;
     }
 
-    public void OnPlayerClickedButton()
+    public void OnPlayerClickedMenu()
     {
         if(GameLifetime.Score > PlayerData.Record)
         {
             PlayerDatabase.SavePlayerRecord((int)GameLifetime.Score);
         }
-
         GameLifetime.ChangeScene(1);
     }
 
@@ -54,7 +54,9 @@ public class DeathScreen : MonoBehaviour
 
     private void OnAnimatedTextComplited()
     {
-        _mainMenu.gameObject.SetActive(true);
+        foreach(var b in _buttons)
+            b.gameObject.SetActive(true);
+        
         SetPlayerScore();
         StartCoroutine(SetInteractableDeathButton());
     }
@@ -63,5 +65,6 @@ public class DeathScreen : MonoBehaviour
     {
         yield return new WaitForSeconds(_interactableTimer);
         _gameOver.interactable = true;
+        if(GameData.IsWatchedAd) _death.interactable = false;
     } 
 }
