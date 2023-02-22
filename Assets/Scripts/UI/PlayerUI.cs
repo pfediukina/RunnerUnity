@@ -55,6 +55,7 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowLoadingScreen(bool show)
     {
+        ShowDeathScreen(false);
         if(_loadingScreen == null) return;
         _loadingScreen.alpha = show ? 1 : 0;
         _loadingScreen.blocksRaycasts = show ? true : false;
