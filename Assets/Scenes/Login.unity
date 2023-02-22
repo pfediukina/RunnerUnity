@@ -5572,6 +5572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   _record: 0
+  _score: 0
 --- !u!4 &1835736899
 Transform:
   m_ObjectHideFlags: 0
