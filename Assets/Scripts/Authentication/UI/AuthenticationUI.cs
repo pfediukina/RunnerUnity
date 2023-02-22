@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+
+public struct InputData
+{
+    public bool HasError;
+    public string AuthError;
+    public string Email;
+    public string Password;
+    public string Name;
+}
 
 public class AuthenticationUI : MonoBehaviour
 {
@@ -12,17 +22,26 @@ public class AuthenticationUI : MonoBehaviour
 
     [SerializeField] private RegistrationUI _registerUI;
     [SerializeField] private LoginUI _loginUI;
-    private bool _isLogin = false;
+    [SerializeField] private Auth _auth;
+
+    private bool _isLogin = true;
 
     void Awake()
     {
         ShowCurrentWindow();
     }
 
-    public void HideAllWindows()
+    public void OnButtonContinueClicked()
     {
-        ShowLogin(false);
-        ShowRegistration(!false);
+        HideErrorText();
+        InputData data = _isLogin ? _loginUI.GetValues() : _registerUI.GetValues();
+        if(data.HasError)
+        {
+            ShowErrorMessage(data.AuthError);
+            return;
+        }
+        if(_isLogin) _auth.SignIn(data.Email, data.Password);
+        else _auth.SignUp(data.Email, data.Password, data.Name);
     }
 
     public void ShowErrorMessage(string error)
@@ -32,13 +51,13 @@ public class AuthenticationUI : MonoBehaviour
         ShowCurrentWindow();
     }
 
-    public void HideErrorText()
+    private void HideErrorText()
     {
         _errorText.text = "";
         _errorText.gameObject.SetActive(false);
     }
 
-    public void SwapWindow()
+    private void SwapWindow()
     {
         HideErrorText();
         _isLogin = !_isLogin;

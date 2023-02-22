@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
@@ -33,8 +31,17 @@ public class PlayerData : MonoBehaviour
         _data._record = 0;
     }
 
-    public static void GetData(string jsonString)
+    public static void SetData(string jsonString)
     {
+        JsonData d = JsonUtility.FromJson<JsonData>(jsonString);
         Debug.Log(jsonString);
+        _data._name = d.Name;
+        _data._record = d.Record;
     } 
+}
+
+struct JsonData
+{
+    public string Name;
+    public int Record;
 }

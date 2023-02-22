@@ -15,29 +15,36 @@ public class RegistrationUI : MonoBehaviour
     [SerializeField] private TMP_InputField _password1;
     [SerializeField] private TMP_InputField _password2;
 
-    void OnEnable()
+    public InputData GetValues()
     {
-
+        InputData data = new InputData();
+        var error = CheckInput();
+        if(error == "")
+        {
+            data.HasError = false;
+            data.Email = _email.text;
+            data.Name = _name.text;
+            data.Password = _password1.text;
+        }
+        else
+        {   
+            data.HasError = true;
+            data.AuthError = error;
+        }
+        return data;
     }
 
-    void OnDisable()
-    {
-
-    }
-
-    public bool CheckInput()
+    public string CheckInput()
     {
         if(_name.text == "")
         {
-            //Authorization.ShowErrorMessage("Missing name!");
-            return false;
+            return "Missing name!";
         }
 
         if(_password1.text != _password2.text)
         {
-            //Authorization.ShowErrorMessage("Password mismatch!");
-            return false;
+            return "Password mismatch!";
         }
-        return true;
+        return "";
     }
 }

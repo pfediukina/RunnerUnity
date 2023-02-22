@@ -11,13 +11,12 @@ public class LoginUI : MonoBehaviour
     [SerializeField] private TMP_InputField _email;
     [SerializeField] private TMP_InputField _password;
 
-    void OnEnable()
+    public InputData GetValues()
     {
-        
-    }
-
-    void OnDisable()
-    {
-        
+        InputData data = new InputData();
+        data.HasError = false;
+        data.Email = _email.text;
+        data.Password = _password.text;
+        return data;
     }
 }

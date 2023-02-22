@@ -12,26 +12,12 @@ public class AuthManager : MonoBehaviour
     {
         if(_instance == null)
             _instance = this;
-    }
-
-    private void OnEnable()
-    {
         Auth.OnLoginSucess += GoToMainMenu;
     }
 
-    private void OnDisable()
+    public void GoToMainMenu()
     {
-        Auth.OnLoginSucess -= GoToMainMenu;
-    }
-
-    public static void GoToMainMenu()
-    {
-        _instance.StartCoroutine(_instance.GoToMenu());
-    }
-    
-    private IEnumerator GoToMenu()
-    {
-        yield return new WaitForSeconds(0.1f);
+        Debug.Log("Here");
         SceneManager.LoadScene(1);
     }
 }
