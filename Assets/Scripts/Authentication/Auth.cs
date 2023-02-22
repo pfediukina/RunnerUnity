@@ -42,17 +42,21 @@ public class Auth : MonoBehaviour
         {
             if(task.IsCompleted)
             {
-                FirebaseUser user = task.Result;
-                SaveLogin(email, pass);
-                PlayerDatabase.SavePlayerData(name, 0, OnLoginSucess);
+                
+                if(task.Exception == null)
+                {
+                    FirebaseUser user = task.Result;
+                    SaveLogin(email, pass);
+                    PlayerDatabase.SavePlayerData(name, 0, OnLoginSucess);
+                }
+                else
+                {
+                    FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
+                    AuthError errorCode = (AuthError)fbEx.ErrorCode;
+                    _authUI.ShowErrorMessage(AuthErrors[errorCode]);                  
+                    LoadingScreen.ShowWindow(false);
+                }
             }
-            else
-            {
-                FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)fbEx.ErrorCode;
-                _authUI.ShowErrorMessage(AuthErrors[errorCode]);
-            }
-            LoadingScreen.ShowWindow(false);
         });
     }
 
@@ -64,19 +68,23 @@ public class Auth : MonoBehaviour
         {
             if(task.IsCompleted)
             {
-                FirebaseUser user = task.Result;
-                UserProfile profile = new UserProfile();
-                user.UpdateUserProfileAsync(profile);
-                SaveLogin(email, pass);
-                PlayerDatabase.GetPlayerData(OnLoginSucess);
+                if(task.Exception == null)
+                {
+                    FirebaseUser user = task.Result;
+                    UserProfile profile = new UserProfile();
+                    user.UpdateUserProfileAsync(profile);
+                    SaveLogin(email, pass);
+                    PlayerDatabase.GetPlayerData(OnLoginSucess);
+                }
+                else
+                {
+                    FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
+                    AuthError errorCode = (AuthError)fbEx.ErrorCode;
+                    _authUI.ShowErrorMessage(AuthErrors[errorCode]);
+                    LoadingScreen.ShowWindow(false);
+                    
+                }
             }
-            else
-            {
-                FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)fbEx.ErrorCode;
-                _authUI.ShowErrorMessage(AuthErrors[errorCode]);
-            }
-            LoadingScreen.ShowWindow(false);
         });
     }
 

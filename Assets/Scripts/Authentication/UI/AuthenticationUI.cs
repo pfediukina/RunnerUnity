@@ -37,6 +37,7 @@ public class AuthenticationUI : MonoBehaviour
         InputData data = _isLogin ? _loginUI.GetValues() : _registerUI.GetValues();
         if(data.HasError)
         {
+            LoadingScreen.ShowWindow(false);
             ShowErrorMessage(data.AuthError);
             return;
         }
