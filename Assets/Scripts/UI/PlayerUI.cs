@@ -29,7 +29,7 @@ public class PlayerUI : MonoBehaviour
     public void UpdateScore()
     {
         //Debug.Log(GameManager.Score);
-        _scoreText.text = ((int)GameManager.Score).ToString();
+        _scoreText.text = ((int)GameLifetime.Score).ToString();
     }
 
     private IEnumerator SetPlayerName()

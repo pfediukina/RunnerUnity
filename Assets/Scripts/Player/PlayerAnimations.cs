@@ -9,7 +9,7 @@ public class PlayerAnimations
     public PlayerAnimations(Animator animator)
     {
         _animator = animator;
-        GameManager.OnGameSpeedChanged += SetIdleAnimationSpeed;
+        GameLifetime.OnGameSpeedChanged += SetIdleAnimationSpeed;
         SetIdleAnimationSpeed(1);
     }
 
@@ -34,13 +34,13 @@ public class PlayerAnimations
 
     public void SetIdleAnimationSpeed(float speed)
     {
-        var s = speed / GameManager.GameSettings.MaxSpeed + 1;
+        var s = speed / GameData.GameSettings.MaxSpeed + 1;
         _animator.SetFloat("IdleSpeed", s);
     }
 
     public void SetIdleAnimationSpeed()
     {
-        SetIdleAnimationSpeed(GameManager.Speed);
+        SetIdleAnimationSpeed(GameLifetime.Speed);
     }
 
 }

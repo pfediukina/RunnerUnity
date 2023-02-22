@@ -10,19 +10,19 @@ public class ObstacleFactory : BaseFactory<Obstacle>
 
     private void Awake()
     {
-        _lineStrings = new string[GameManager.GameSettings.NumberOfLines];
+        _lineStrings = new string[GameData.GameSettings.NumberOfLines];
         
         _parent = new GameObject("Obs");
         _parent.transform.parent = transform;
 
-        factoryObjects = InitPool(GetAmountOfObsPerLine() * GameManager.GameSettings.NumberOfLines, _parent.transform);
+        factoryObjects = InitPool(GetAmountOfObsPerLine() * GameData.GameSettings.NumberOfLines, _parent.transform);
     }
 
     public void SpawnObstacles(Chunk chunk)
     {
         DespawnObstackles();
         GenerateObstacleStrings();
-        for(int i = 0; i < GameManager.GameSettings.NumberOfLines; i++)
+        for(int i = 0; i < GameData.GameSettings.NumberOfLines; i++)
         {
             SpawnLine(i);
         }
@@ -30,12 +30,12 @@ public class ObstacleFactory : BaseFactory<Obstacle>
 
     private void SpawnLine(int line)
     {
-        float lineXOffset = (line - GameManager.GameSettings.StartLine) * GameManager.GameSettings.LineDistance;
+        float lineXOffset = (line - GameData.GameSettings.StartLine) * GameData.GameSettings.LineDistance;
 
         for(int i = 0; i < _lineStrings[line].Length; i++)
         {
             if(_lineStrings[line][i] == '0') continue;
-            Vector3 pos = transform.position + Vector3.forward * i * GameManager.GameSettings.Distance;
+            Vector3 pos = transform.position + Vector3.forward * i * GameData.GameSettings.Distance;
             pos += Vector3.right * lineXOffset;
             _objects.Add(SpawnObstacle(pos, _lineStrings[line][i] == '1' ? true : false));
         }
@@ -59,7 +59,7 @@ public class ObstacleFactory : BaseFactory<Obstacle>
 
     private void GenerateObstacleStrings()
     {
-        for(int i = 0; i < GameManager.GameSettings.NumberOfLines; i++)
+        for(int i = 0; i < GameData.GameSettings.NumberOfLines; i++)
         {
             _lineStrings[i] = GenerateString();
         }
@@ -77,6 +77,6 @@ public class ObstacleFactory : BaseFactory<Obstacle>
 
     private int GetAmountOfObsPerLine()
     {
-        return (int)(Chunk.Lenght / GameManager.GameSettings.Distance);
+        return (int)(Chunk.Lenght / GameData.GameSettings.Distance);
     }
 }

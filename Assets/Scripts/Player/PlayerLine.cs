@@ -12,7 +12,7 @@ public class PlayerLine
     public PlayerLine(Player player)
     {
         player.OnPlayerInput += GetPlayerInput;
-        _line = GameManager.GameSettings.StartLine;
+        _line = GameData.GameSettings.StartLine;
         CalculateLinesPositionX(player);
     }
 
@@ -25,7 +25,7 @@ public class PlayerLine
         _prevLine = _line;
         
         _line += _isRight ? 1 : -1; 
-        _line = Mathf.Clamp(_line, 0, GameManager.GameSettings.NumberOfLines - 1);
+        _line = Mathf.Clamp(_line, 0, GameData.GameSettings.NumberOfLines - 1);
         
         _stepTimer = 0;
     }
@@ -45,7 +45,6 @@ public class PlayerLine
         return true;
     }
 
-    //WIP
     private Vector3 GetMoveLerp(Player player)
     {
         float newX = Mathf.Lerp(player.transform.position.x, _linesPosX[_line], _stepTimer / player.PlayerSettings.StepDuration);
@@ -55,15 +54,15 @@ public class PlayerLine
 
     private void CalculateLinesPositionX(Player owner)
     {
-        _linesPosX = new float[GameManager.GameSettings.NumberOfLines]; 
-        _linesPosX[GameManager.GameSettings.StartLine] = owner.transform.position.x;
+        _linesPosX = new float[GameData.GameSettings.NumberOfLines]; 
+        _linesPosX[GameData.GameSettings.StartLine] = owner.transform.position.x;
 
-        for(int i = 0; i < GameManager.GameSettings.NumberOfLines; i++)
+        for(int i = 0; i < GameData.GameSettings.NumberOfLines; i++)
         {
-            if(i == GameManager.GameSettings.StartLine) continue;
-            _linesPosX[i] = GameManager.GameSettings.LineDistance *
-                                (i - GameManager.GameSettings.StartLine) + 
-                                _linesPosX[GameManager.GameSettings.StartLine];
+            if(i == GameData.GameSettings.StartLine) continue;
+            _linesPosX[i] = GameData.GameSettings.LineDistance *
+                                (i - GameData.GameSettings.StartLine) + 
+                                _linesPosX[GameData.GameSettings.StartLine];
         }
     }
 }

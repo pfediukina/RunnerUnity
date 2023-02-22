@@ -14,12 +14,12 @@ public class ChunkFactory : BaseFactory<Chunk>
         _parent = new GameObject("Chunks");
         _parent.transform.parent = transform;
 
-        factoryObjects = InitPool(GameManager.GameSettings.NumberOfChunks, _parent.transform);
+        factoryObjects = InitPool(GameData.GameSettings.NumberOfChunks, _parent.transform);
     }
 
     private void Start()
     {
-        SpawnInitialChunks(GameManager.GameSettings.NumberOfChunks);
+        SpawnInitialChunks(GameData.GameSettings.NumberOfChunks);
     }
 
     private void SpawnInitialChunks(int amount)

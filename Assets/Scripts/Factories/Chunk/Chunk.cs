@@ -26,7 +26,7 @@ public class Chunk : MonoBehaviour
 
     public void MoveChunk()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _endPos, Time.deltaTime * GameManager.Speed);
+        transform.position = Vector3.MoveTowards(transform.position, _endPos, Time.deltaTime * GameLifetime.Speed);
         if(Vector3.Distance(transform.position, _endPos) == 0)
         {
             OnChunkBehindPlayer?.Invoke(this);
