@@ -29,6 +29,7 @@ public class Auth : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("Auth") == 1)
         {
+            LoadingScreen.ShowWindow(true);
             SignIn(PlayerPrefs.GetString("Login"), PlayerPrefs.GetString("Password"));
         }
     }
@@ -36,19 +37,25 @@ public class Auth : MonoBehaviour
     //register
     public void SignUp(string email, string pass, string name)
     {
+        LoadingScreen.ShowWindow(true);
         FirebaseAuth.DefaultInstance.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread( task =>
         {
             if(task.IsCompleted)
             {
-                FirebaseUser user = task.Result;
-                SaveLogin(email, pass);
-                PlayerDatabase.SavePlayerData(name, 0, OnLoginSucess);
-            }
-            else
-            {
-                FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)fbEx.ErrorCode;
-                _authUI.ShowErrorMessage(AuthErrors[errorCode]);
+                
+                if(task.Exception == null)
+                {
+                    FirebaseUser user = task.Result;
+                    SaveLogin(email, pass);
+                    PlayerDatabase.SavePlayerData(name, 0, OnLoginSucess);
+                }
+                else
+                {
+                    FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
+                    AuthError errorCode = (AuthError)fbEx.ErrorCode;
+                    _authUI.ShowErrorMessage(AuthErrors[errorCode]);                  
+                    LoadingScreen.ShowWindow(false);
+                }
             }
         });
     }
@@ -56,21 +63,27 @@ public class Auth : MonoBehaviour
     //login
     public void SignIn(string email, string pass)
     {
+        LoadingScreen.ShowWindow(true);
         FirebaseAuth.DefaultInstance.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread( task =>
         {
             if(task.IsCompleted)
             {
-                FirebaseUser user = task.Result;
-                UserProfile profile = new UserProfile();
-                user.UpdateUserProfileAsync(profile);
-                SaveLogin(email, pass);
-                PlayerDatabase.GetPlayerData(OnLoginSucess);
-            }
-            else
-            {
-                FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)fbEx.ErrorCode;
-                _authUI.ShowErrorMessage(AuthErrors[errorCode]);
+                if(task.Exception == null)
+                {
+                    FirebaseUser user = task.Result;
+                    UserProfile profile = new UserProfile();
+                    user.UpdateUserProfileAsync(profile);
+                    SaveLogin(email, pass);
+                    PlayerDatabase.GetPlayerData(OnLoginSucess);
+                }
+                else
+                {
+                    FirebaseException fbEx = task.Exception.GetBaseException() as FirebaseException;
+                    AuthError errorCode = (AuthError)fbEx.ErrorCode;
+                    _authUI.ShowErrorMessage(AuthErrors[errorCode]);
+                    LoadingScreen.ShowWindow(false);
+                    
+                }
             }
         });
     }

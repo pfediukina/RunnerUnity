@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class DeathState : IState<Player>
 {
-    private int _animationNameID = Animator.StringToHash("Death");
-    private Vector3 _deathPos;
-
-    public void Enter(Player owner) {
+    private int _animationNameID = 0;
+    
+    public void Enter(Player owner) 
+    {
+        if(_animationNameID == 0)
+            _animationNameID = Animator.StringToHash(owner.PlayerSettings.AnimationNames.Death);
+            
         Death(owner);
         owner.Collider.enabled = false; 
     }
@@ -16,16 +19,9 @@ public class DeathState : IState<Player>
 
     public void Update(Player owner) {}
 
-    public void SetDeathPos(Vector3 pos)
-    {
-        _deathPos = pos;
-    }
-
     private void Death(Player owner)
-    {
-        if(owner.PlayerAnimator != null)
-            owner.PlayerAnimator.PlayStateAnimation(_animationNameID);
-
+    { 
+        owner.PlayerAnimator.PlayStateAnimation(_animationNameID);
         GameLifetime.PauseGame();
         owner.transform.eulerAngles += Vector3.down * 90;
         owner.transform.position += Vector3.back * 0.5f;

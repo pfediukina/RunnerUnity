@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public Action<Player> OnPlayerUpdate;    
     
     [SerializeField] private PlayerSettings _settings;
-
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private PlayerUI _playerUI;
 
@@ -27,6 +26,12 @@ public class Player : MonoBehaviour
     private Collider _obstacle;
 
     [SerializeField] private Transform _groundChecker;
+
+    void Awake()
+    {
+        OnPlayerInput = null;
+        OnPlayerUpdate = null;
+    }
 
     private void Start()
     {
@@ -56,7 +61,6 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         var death = StateMachine.GetState<DeathState>();
-        death.SetDeathPos(other.transform.position);
         StateMachine.SetState<DeathState>();
         _obstacle = other;
     }
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour
 
     private void Input_OnPlayerInput(Vector2 direction)
     {
+        //Debug.Log("HERE");
         OnPlayerInput?.Invoke(direction, this);
     }
 

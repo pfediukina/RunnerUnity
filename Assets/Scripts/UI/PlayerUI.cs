@@ -1,15 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-
     [SerializeField] private DeathScreen _deathScreen;
-    [SerializeField] private CanvasGroup _loadingScreen;
     [SerializeField] private Advertising _adsScreen;
 
     [SerializeField] private TMPro.TextMeshProUGUI _scoreText;
@@ -49,19 +43,20 @@ public class PlayerUI : MonoBehaviour
             { 
                 _countText.text = "";
                 GameLifetime.ResumeGame();
+                PlayerInput.EnableInput();
             }
         }
     }
 
     public void ShowLoadingScreen(bool show)
     {
-        if(_loadingScreen == null) return;
-        _loadingScreen.alpha = show ? 1 : 0;
-        _loadingScreen.blocksRaycasts = show ? true : false;
+        PlayerInput.DisableInput();
+        LoadingScreen.ShowWindow(show);
     }
 
     public void ShowDeathScreen(bool show)
     {
+        PlayerInput.DisableInput();
         if(show) 
         _deathScreen.Show();
         else _deathScreen.Hide();
@@ -71,19 +66,5 @@ public class PlayerUI : MonoBehaviour
     {
         //Debug.Log(GameManager.Score);
         _scoreText.text = ((int)GameLifetime.Score).ToString();
-    }
-
-    private IEnumerator SetPlayerName()
-    {
-        yield return new WaitForSeconds(0.1f);
-        _name.text = PlayerData.Name;
-    }
-
-    private void SetCount(int num)
-    {
-        if(num == -1)
-        {
-            _countText.text = "";
-        }
     }
 }

@@ -55,6 +55,7 @@ public class ObstacleFactory : BaseFactory<Obstacle>
         {
             factoryObjects.Release(obj);
         }
+        _objects.Clear();
     }
 
     private void GenerateObstacleStrings()

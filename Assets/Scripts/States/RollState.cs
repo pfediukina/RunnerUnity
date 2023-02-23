@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class RollState : IState<Player>
 {
-    private int _animationName = Animator.StringToHash("Roll");
+    private int _animationNameID = 0;
     private float _rollTimer;
     private float _colliderPosY = 0.5f;
-
-    //BUG таймер не работает пока идет сайд степ 
 
     public void Enter(Player owner)
     {
         owner.OnPlayerInput += ChangeStateWithSwipe;
+        if(_animationNameID == 0)
+            _animationNameID = Animator.StringToHash(owner.PlayerSettings.AnimationNames.Roll);
         Roll(owner);
         owner.PlayerAnimator.SetRollAnimationSpeed(owner.PlayerSettings.RollDuration);
     }
@@ -37,7 +37,7 @@ public class RollState : IState<Player>
 
         _rollTimer = 0;
         owner.RigidBody.velocity = Vector3.down * owner.PlayerSettings.DropForce;
-        owner.PlayerAnimator.PlayStateAnimation(_animationName);
+        owner.PlayerAnimator.PlayStateAnimation(_animationNameID);
     }
 
     private void ChangeStateWithSwipe(Vector2 swipeDirection, Player owner)

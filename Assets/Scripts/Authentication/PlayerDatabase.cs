@@ -27,7 +27,7 @@ public static class PlayerDatabase
         d.Name = PlayerData.Name;
         d.Record  = PlayerData.Record;
         string json = JsonUtility.ToJson(d);
-
         PlayerData.SetData(json);
+        FirebaseManager.SaveUserInfo(null, json);
     }
 }

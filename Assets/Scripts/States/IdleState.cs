@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class IdleState : IState<Player>
 {
-    private int _animationNameID = Animator.StringToHash("Idle");
+    private int _animationNameID = 0;
     private float _colliderPosY = 1.3f;
 
     public void Enter(Player owner)
     {
         owner.OnPlayerInput += ChangeStateWithSwipe;
+        if(_animationNameID == 0)
+            _animationNameID = Animator.StringToHash(owner.PlayerSettings.AnimationNames.Idle);
+            
         Idle(owner);
     }
 

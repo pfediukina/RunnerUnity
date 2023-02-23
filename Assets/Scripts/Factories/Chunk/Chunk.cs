@@ -43,12 +43,7 @@ public class Chunk : MonoBehaviour
         transform.position = startPos;
         _endPos = endPos;
     }
-
-    public float GetWidth()
-    {
-        return _meshRenderer.bounds.size.x;
-    }
-
+ 
     private float GetLength()
     {
         return _meshRenderer.bounds.size.z;

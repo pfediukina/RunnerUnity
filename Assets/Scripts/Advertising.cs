@@ -41,7 +41,7 @@ public class Advertising : MonoBehaviour
             });
         }
 
-    public void ShowRewardedAd()
+    private void ShowRewardedAd()
     {
         if(_ad != null && _ad.CanShowAd())
         {
@@ -50,7 +50,7 @@ public class Advertising : MonoBehaviour
         }
     }
 
-    public void PlayerSawAd(Reward reward)
+    private void PlayerSawAd(Reward reward)
     {
         OnPlayerSawAd?.Invoke();
     }

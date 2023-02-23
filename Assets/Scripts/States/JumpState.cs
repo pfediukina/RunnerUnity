@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class JumpState : IState<Player>
 {
-    private int _animationStartID = Animator.StringToHash("JumpStart");
-    private int _animationLoopID = Animator.StringToHash("JumpLoop");
-    private float _colliderPosY = 0.5f;
+    private int _animationStartID = 0;
+    private int _animationLoopID = 0;
+    private float _colliderPosY = 2f;
 
     public void Enter(Player owner)
     {
         owner.OnPlayerInput += ChangeStateWithSwipe;
         owner.Collider.center += Vector3.up * 1.5f;
+        if(_animationStartID == 0)
+        {
+            _animationStartID = Animator.StringToHash(owner.PlayerSettings.AnimationNames.JumpStart);
+            _animationLoopID = Animator.StringToHash(owner.PlayerSettings.AnimationNames.JumpLoop);
+        }
         Jump(owner);
     }
 
@@ -25,7 +30,6 @@ public class JumpState : IState<Player>
         owner.PlayerAnimator.SetPlayerSpeedY(owner.RigidBody.velocity.y);
         if(owner.IsGrounded && owner.RigidBody.velocity.y < 0)
         {
-           // Debug.Log("true");
             owner.StateMachine.SetState<IdleState>();
         }
     }

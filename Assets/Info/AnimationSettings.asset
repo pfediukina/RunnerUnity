@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78eeea697891d434da629135446e3a01, type: 3}
-  m_Name: GameSettings
+  m_Script: {fileID: 11500000, guid: eae61f382238d7840bc2e57f7100e79b, type: 3}
+  m_Name: AnimationSettings
   m_EditorClassIdentifier: 
-  NumberOfChunks: 10
-  NumberOfLines: 3
-  StartLine: 1
-  StartSpeed: 10
-  SpeedMultiplier: 4
-  SpeedIncreaseTime: 24.2
-  MaxSpeed: 100
-  LineDistance: 3.5
-  Distance: 15
+  Idle: Idle
+  Standing: Standing
+  JumpStart: JumpStart
+  JumpLoop: JumpLoop
+  JumpEnd: JumpEnd
+  Roll: Roll
+  Death: Death

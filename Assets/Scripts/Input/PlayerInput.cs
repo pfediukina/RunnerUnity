@@ -9,18 +9,20 @@ public class PlayerInput : MonoBehaviour
 {
     public static Action<Vector2> OnInput;
 
-    private PlayerActions _actions;
+    private static PlayerActions _actions;
     private List<IPlayerInput> _inputs = new List<IPlayerInput>();
 
     private void Awake()
     {
         if(_actions == null)
+        {
             _actions = new PlayerActions();
-    }
-
-    private void OnEnable()
-    {
-        _actions.Enable();
+        }
+        else
+        {
+            _actions.Disable();
+            _actions = new PlayerActions();
+        }
     }
     
     private void OnDisable()
@@ -31,6 +33,16 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         InitControls();
+    }
+
+    public static void EnableInput()
+    {
+        _actions.Enable();
+    }
+
+    public static void DisableInput()
+    {
+        _actions.Disable();
     }
 
     private void InitControls()
@@ -46,6 +58,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Input_OnDirectionInput(Vector2 direction)
     {
+        //Debug.Log("Here");
         OnInput?.Invoke(direction);
     }
 }

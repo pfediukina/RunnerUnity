@@ -11,6 +11,7 @@ public class PlayerLine
 
     public PlayerLine(Player player)
     {
+        player.OnPlayerInput -= GetPlayerInput;
         player.OnPlayerInput += GetPlayerInput;
         _line = GameData.GameSettings.StartLine;
         CalculateLinesPositionX(player);
@@ -20,7 +21,7 @@ public class PlayerLine
     {
         if(direction == Vector2.up || direction == Vector2.down) return;
         if(player.StateMachine.CurrentState is DeathState) return;
-        
+
         _isRight = direction == Vector2.right ? true : false;
         _prevLine = _line;
         

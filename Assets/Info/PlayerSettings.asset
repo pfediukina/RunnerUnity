@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ab371aac8e58142b6ddd6566843678, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  JumpForce: 15
+  JumpForce: 9
   DropForce: 43
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
   StepDuration: 0.2
   RollDuration: 0.6
+  AnimationNames: {fileID: 11400000, guid: fc2e16b41b573bb4b89b19239a5ed5a1, type: 2}

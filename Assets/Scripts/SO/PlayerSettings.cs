@@ -10,7 +10,10 @@ public class PlayerSettings : ScriptableObject
     [Range(0, 50)]public float DropForce;
     public LayerMask GroundLayer;
     
-    [Header("Animation")]
+    [Header("States")]
     [Range(0, 5)]public float StepDuration;
     [Range(0, 5)]public float RollDuration;
+
+    [Header("Animations")]
+    public AnimationSettings AnimationNames;
 }
