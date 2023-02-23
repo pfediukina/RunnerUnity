@@ -15,19 +15,19 @@ public class PlayerInput : MonoBehaviour
     private void Awake()
     {
         if(_actions == null)
+        {
             _actions = new PlayerActions();
-    }
-
-    private void OnEnable()
-    {
-        //_actions.Enable();
-        CameraManager.OnCameraMoved += EnableInput;
+        }
+        else
+        {
+            _actions.Disable();
+            _actions = new PlayerActions();
+        }
     }
     
     private void OnDisable()
     {
         _actions.Disable();
-        CameraManager.OnCameraMoved -= EnableInput;
     }
 
     private void Start()
@@ -58,6 +58,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Input_OnDirectionInput(Vector2 direction)
     {
+        //Debug.Log("Here");
         OnInput?.Invoke(direction);
     }
 }

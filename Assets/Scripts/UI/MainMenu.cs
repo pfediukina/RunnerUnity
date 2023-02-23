@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private TMPro.TextMeshProUGUI _tapText;
     [SerializeField] private TMPro.TextMeshProUGUI _playerName;
+    [SerializeField] private TMPro.TextMeshProUGUI _playerRecord;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class MainMenu : MonoBehaviour
     void OnEnable()
     {
         _playerName.text = PlayerData.Name;
+        _playerRecord.text =  $"RECORD: {PlayerData.Record}";
     }
 
     public void LogOut()

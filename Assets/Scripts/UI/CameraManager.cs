@@ -11,13 +11,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float _inputDelay;
     [SerializeField] private float _delay;
 
-    public static Action OnCameraMoved;
-
-    void Awake()
-    {
-        OnCameraMoved = null;
-    }
-
     private void Start()
     {
         StartCoroutine(ChangeCamera());
@@ -33,6 +26,6 @@ public class CameraManager : MonoBehaviour
     private IEnumerator CameraMoved()
     {
         yield return new WaitForSeconds(_inputDelay + _delay);
-        OnCameraMoved?.Invoke();
+        PlayerInput.EnableInput();
     } 
 }

@@ -27,6 +27,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform _groundChecker;
 
+    void Awake()
+    {
+        OnPlayerInput = null;
+        OnPlayerUpdate = null;
+    }
+
     private void Start()
     {
         InitializeComponents();
@@ -74,6 +80,7 @@ public class Player : MonoBehaviour
 
     private void Input_OnPlayerInput(Vector2 direction)
     {
+        //Debug.Log("HERE");
         OnPlayerInput?.Invoke(direction, this);
     }
 

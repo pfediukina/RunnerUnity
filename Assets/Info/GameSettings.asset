@@ -16,8 +16,8 @@ MonoBehaviour:
   NumberOfLines: 3
   StartLine: 1
   StartSpeed: 10
-  SpeedMultiplier: 2
-  SpeedIncreaseTime: 10
+  SpeedMultiplier: 4
+  SpeedIncreaseTime: 24.2
   MaxSpeed: 100
   LineDistance: 3.5
   Distance: 15
