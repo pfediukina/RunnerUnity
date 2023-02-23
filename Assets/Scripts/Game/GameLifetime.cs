@@ -51,7 +51,7 @@ public class GameLifetime : MonoBehaviour
 
     public static void ResumeGame()
     {
-        _instance.StopCoroutine(_instance._speedIncrease);
+        _instance.StartCoroutine(_instance.IncreaseSpeed());
         _instance._speed = _instance._lastSpeed;
     }
 
