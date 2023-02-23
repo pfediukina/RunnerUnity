@@ -37,7 +37,6 @@ public class PlayerInput : MonoBehaviour
 
     public static void EnableInput()
     {
-        Debug.Log("Enable");
         _actions.Enable();
     }
 
