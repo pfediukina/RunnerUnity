@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour
 {
     public static Action<Vector2> OnInput;
 
-    private PlayerActions _actions;
+    private static PlayerActions _actions;
     private List<IPlayerInput> _inputs = new List<IPlayerInput>();
 
     private void Awake()
@@ -35,9 +35,15 @@ public class PlayerInput : MonoBehaviour
         InitControls();
     }
 
-    public void EnableInput()
+    public static void EnableInput()
     {
+        Debug.Log("Enable");
         _actions.Enable();
+    }
+
+    public static void DisableInput()
+    {
+        _actions.Disable();
     }
 
     private void InitControls()

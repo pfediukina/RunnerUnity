@@ -50,15 +50,18 @@ public class PlayerUI : MonoBehaviour
                 GameLifetime.ResumeGame();
             }
         }
+        PlayerInput.EnableInput();
     }
 
     public void ShowLoadingScreen(bool show)
     {
+        PlayerInput.DisableInput();
         LoadingScreen.ShowWindow(show);
     }
 
     public void ShowDeathScreen(bool show)
     {
+        PlayerInput.DisableInput();
         if(show) 
         _deathScreen.Show();
         else _deathScreen.Hide();

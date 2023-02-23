@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ab371aac8e58142b6ddd6566843678, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  JumpForce: 8
+  JumpForce: 9
   DropForce: 43
   GroundLayer:
     serializedVersion: 2

@@ -35,5 +35,4 @@ public class CameraManager : MonoBehaviour
         yield return new WaitForSeconds(_inputDelay + _delay);
         OnCameraMoved?.Invoke();
     } 
-    
 }
