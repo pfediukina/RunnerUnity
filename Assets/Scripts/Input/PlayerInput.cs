@@ -20,17 +20,24 @@ public class PlayerInput : MonoBehaviour
 
     private void OnEnable()
     {
-        _actions.Enable();
+        //_actions.Enable();
+        CameraManager.OnCameraMoved += EnableInput;
     }
     
     private void OnDisable()
     {
         _actions.Disable();
+        CameraManager.OnCameraMoved -= EnableInput;
     }
 
     private void Start()
     {
         InitControls();
+    }
+
+    public void EnableInput()
+    {
+        _actions.Enable();
     }
 
     private void InitControls()
